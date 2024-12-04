@@ -1,20 +1,16 @@
 <h1 align="center">
-  <br>
-  <img src="vite-quick-start.png" alt="vite-quick-start" width="200">
-  <br>
-  vite-quick-start
+  reval
   <br>
 </h1>
 
-<h4 align="center">A minimal setup to get React working in Vite with several additional packages to make development easier.
+<h4 align="center">Quick and easy evaluation of JavaScript code.
 <br>
 <br>
-(icon by <a href="https://www.flaticon.com/authors/sympnoiaicon"> sympnoiaicon</a>)
 
 </h4>
 
 <p align="center">
-  <img src="https://github.com/TheWilley/vite-quick-start/actions/workflows/main.yml/badge.svg" alt="Tests">
+  <img src="https://github.com/TheWilley/reval/actions/workflows/main.yml/badge.svg" alt="Tests">
 </p>
 
 <p align="center">
@@ -25,18 +21,21 @@
 
 ## Features
 
-- [React](https://reactjs.org/)
-- [vite](https://vitejs.dev/)
-- [vitest](http://vitest.dev/)
-- [eslint](https://eslint.org/)
-- [prettier](https://prettier.io/)
-- [husky](https://typicode.github.io/husky/#/)
-- [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/)
-- Automatic testing using GitHub Actions
+- Easily evalutate javascript expressions
+- Save and load your expressions
+- Minimal user interface
 
 ## Getting Started
 
+Simply go to the [official webpage](link) to get started, or run the app yourself by following these steps:
+
 ```
+# Clone this repository
+$ git clone https://github.com/thewilley/reval.git
+
+# Go into the repository
+$ cd reval
+
 # Install dependencies
 $ npm i
 
@@ -49,4 +48,4 @@ $ npm run build
 
 ## License
 
-By default, this project is licensed under the [MIT License](./LICENSE). You can change the license by updating the `LICENSE` file.
+[MIT](./LICENSE)
