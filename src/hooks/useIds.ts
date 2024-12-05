@@ -24,7 +24,10 @@ export default function useIds() {
   };
 
   const addElement = () => {
-    setIds((prev) => [...prev, prev.length + 1]);
+    setIds((prev) => {
+      const nextId = prev.length > 0 ? Math.max(...prev) + 1 : 0;
+      return [...prev, nextId];
+    });
   };
 
   return [ids, addElement, removeElement] as const;
