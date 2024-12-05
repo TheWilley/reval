@@ -1,34 +1,49 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { EvalObject } from '../types/types';
+import { localStorageIdPrefix } from '../utils/localStorageKeys';
 
-export default function useEval() {
-  const [expression, setExpression] = useState<EvalObject['expression']>();
+export default function useEval(id: number) {
+  const [expression, setExpression] = useState<EvalObject['expression']>(() => {
+    const savedExpression = localStorage.getItem(localStorageIdPrefix + id);
+    return savedExpression || '';
+  });
+
   const [result, setResult] = useState<EvalObject['result']>({
     state: 'neutral',
     value: 'please write an expression',
   });
 
-  const evaluate = (expression: string) => {
+  const evaluate = (expr: string): EvalObject['result'] => {
     try {
-      const result = eval(expression);
-
-      return { state: 'success', value: String(result) } as EvalObject['result'];
-    } catch (e) {
-      return { state: 'error', value: String(e) } as EvalObject['result'];
+      const evalResult = eval(expr); // ⚠️ Ensure eval usage is intentional and safe.
+      return { state: 'success', value: String(evalResult) };
+    } catch (error) {
+      return { state: 'error', value: String(error) };
     }
   };
 
-  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setExpression(e.target.value);
-    if (!e.target.value) {
+  useEffect(() => {
+    if (!expression) {
       setResult({
         state: 'neutral',
         value: 'please write an expression',
       });
     } else {
-      setResult(evaluate(e.target.value));
+      setResult(evaluate(expression));
     }
+  }, [expression]);
+
+  useEffect(() => {
+    localStorage.setItem(localStorageIdPrefix + id, expression);
+  }, [expression, id]);
+
+  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setExpression(e.target.value);
   };
 
-  return [expression, result, onChange] as const;
+  const clearExpression = () => {
+    localStorage.setItem(localStorageIdPrefix + id, '');
+  };
+
+  return [expression, result, onChange, clearExpression] as const;
 }

@@ -1,13 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
+import { localStorageIdsArray } from '../utils/localStorageKeys';
 
 export default function useIds() {
-  const [ids, setIds] = useState<number[]>([]);
+  const [ids, setIds] = useState<number[]>(() => {
+    const storedIds = localStorage.getItem(localStorageIdsArray);
+    return storedIds ? JSON.parse(storedIds) : [];
+  });
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
     if (event.altKey) {
       switch (event.key) {
         case 'Enter': {
           addElement();
+          break;
         }
       }
     }
@@ -16,8 +21,14 @@ export default function useIds() {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
 
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
   }, [handleKeyPress]);
+
+  useEffect(() => {
+    localStorage.setItem(localStorageIdsArray, JSON.stringify(ids));
+  }, [ids]);
 
   const removeElement = (idToRemove: number) => {
     setIds((prevIds) => prevIds.filter((id) => id !== idToRemove));

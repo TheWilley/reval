@@ -12,7 +12,7 @@ function Row({
   visibleId: number;
   removeElement: (id: number) => void;
 }) {
-  const [expression, result, onChange] = useEval();
+  const [expression, result, onChange, clearExpression] = useEval(id);
   const [opacity, setOpacity] = useState('0%');
   const [rotate, setRotate] = useState('-20px');
   const [maxHeight, setMaxHeight] = useState('999px');
@@ -26,9 +26,9 @@ function Row({
     setOpacity('0%');
     setRotate('-20px');
     setMaxHeight('0px');
-
     setTimeout(() => {
       removeElement(id);
+      clearExpression();
     }, 300);
   };
 
