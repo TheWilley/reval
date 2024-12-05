@@ -3,7 +3,15 @@ import useEval from '../hooks/useEval';
 import Result from './Result';
 import { useEffect, useState } from 'react';
 
-function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
+function Row({
+  id,
+  visibleId,
+  removeElement,
+}: {
+  id: number;
+  visibleId: number;
+  removeElement: (id: number) => void;
+}) {
   const [expression, result, onChange] = useEval();
   const [opacity, setOpacity] = useState('0%');
   const [rotate, setRotate] = useState('-20px');
@@ -31,9 +39,9 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
     >
       <div className='grid grid-cols-[10%_50%_40%] items-center gap-4 p-4'>
         <div className='flex flex-col items-center'>
-          <div className='font-mono text-xl'>{id}</div>
+          <div className='font-mono text-xl'>{visibleId}</div>
           <button
-            className='btn btn-sm btn-warning mt-2 rounded-md px-3 py-1'
+            className='btn btn-warning btn-sm mt-2 rounded-md px-3 py-1'
             onClick={remove}
             data-testid='remove'
           >
