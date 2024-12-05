@@ -20,7 +20,14 @@ export default function useEval() {
 
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setExpression(e.target.value);
-    setResult(evaluate(e.target.value));
+    if (!e.target.value) {
+      setResult({
+        state: 'neutral',
+        value: 'please write an expression',
+      });
+    } else {
+      setResult(evaluate(e.target.value));
+    }
   };
 
   return [expression, result, onChange] as const;
