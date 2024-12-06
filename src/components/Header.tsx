@@ -1,7 +1,12 @@
-import { faDownload, faKeyboard, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useSaveLoad from '../hooks/useSaveLoad';
+import FileLoader from './FileLoader';
+import FileSaver from './FileSaver';
 
 function Header() {
+  const [save, load] = useSaveLoad();
+
   return (
     <>
       <h1 className='mb-2 mt-3 text-center text-xl font-bold'> reval </h1>
@@ -11,14 +16,8 @@ function Header() {
           icon={faKeyboard}
           className='cursor-pointer opacity-70 hover:opacity-100'
         />
-        <FontAwesomeIcon
-          icon={faDownload}
-          className='cursor-pointer opacity-70 hover:opacity-100'
-        />
-        <FontAwesomeIcon
-          icon={faUpload}
-          className='cursor-pointer opacity-70 hover:opacity-100'
-        />
+        <FileSaver onFileSave={save} />
+        <FileLoader onFileLoad={load} />
       </div>
     </>
   );

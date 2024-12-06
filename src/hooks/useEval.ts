@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { EvalObject, LocalStorageExpressionsArray } from '../types/types';
+import { EvalObject, LocalStorageExpressionsArray, SaveFile } from '../types/types';
 import { localStorageExpressionsArray } from '../utils/localStorageKeys';
 
-export default function useEval(id: number) {
+export default function useEval(id: number, load: (savefile: SaveFile) => void) {
   const [expression, setExpression] = useState<EvalObject['expression']>(() => {
     const savedExpression = localStorage.getItem(localStorageExpressionsArray);
 

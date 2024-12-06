@@ -10,3 +10,9 @@ export type LocalStorageExpressionsArray = {
   id: number;
   expression: string;
 }[];
+
+export type SaveFile = {
+  id: 'reval';
+  ids: number[];
+  expressions: LocalStorageExpressionsArray[];
+};
