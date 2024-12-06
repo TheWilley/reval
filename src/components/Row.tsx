@@ -37,7 +37,7 @@ function Row({
       className='rounded-lg shadow-md transition-all duration-300 ease-in-out'
       style={{ opacity, maxHeight, translate: `0px ${rotate}` }}
     >
-      <div className='grid grid-cols-[10%_50%_40%] items-center gap-4 p-4'>
+      <div className='grid grid-cols-1 items-center gap-4 p-4 md:grid-cols-[10%_50%_40%]'>
         <div className='flex flex-col items-center'>
           <div className='font-mono text-xl'>{visibleId}</div>
           <button
@@ -48,11 +48,12 @@ function Row({
             Remove
           </button>
         </div>
-
+        <hr className='opacity-10 md:hidden' />
         <div className='flex justify-center'>
           <TextArea expression={expression} onChange={onChange} />
         </div>
 
+        <hr className='opacity-10 md:hidden' />
         <div className='flex items-center justify-center'>
           <Result state={result.state} value={result.value} />
         </div>

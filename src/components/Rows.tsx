@@ -11,7 +11,7 @@ function Rows({
 }) {
   return (
     <>
-      <div className='rounded-md bg-base-200 text-left transition-all'>
+      <div className='overflow-x-hidden rounded-md bg-base-200 text-left transition-all'>
         <ul>
           {ids.map((id, index) => (
             <Row key={id} id={id} visibleId={index} removeElement={removeElement} />
@@ -19,7 +19,7 @@ function Rows({
         </ul>
       </div>
       <div
-        className='mt-5 cursor-pointer opacity-70 hover:opacity-100'
+        className='mb-5 mt-5 cursor-pointer opacity-70 hover:opacity-100'
         onClick={addElement}
       >
         {' '}
