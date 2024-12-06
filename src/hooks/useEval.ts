@@ -1,11 +1,20 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { EvalObject } from '../types/types';
-import { localStorageIdPrefix } from '../utils/localStorageKeys';
+import { EvalObject, LocalStorageExpressionsArray } from '../types/types';
+import { localStorageExpressionsArray } from '../utils/localStorageKeys';
 
 export default function useEval(id: number) {
   const [expression, setExpression] = useState<EvalObject['expression']>(() => {
-    const savedExpression = localStorage.getItem(localStorageIdPrefix + id);
-    return savedExpression || '';
+    const savedExpression = localStorage.getItem(localStorageExpressionsArray);
+
+    if (savedExpression) {
+      const expressions: Array<{ id: string; expression: EvalObject['expression'] }> =
+        JSON.parse(savedExpression);
+
+      const foundItem = expressions.find((item) => Number(item.id) === id);
+      return foundItem ? foundItem.expression : '';
+    }
+
+    return '';
   });
 
   const [result, setResult] = useState<EvalObject['result']>({
@@ -34,7 +43,20 @@ export default function useEval(id: number) {
   }, [expression]);
 
   useEffect(() => {
-    localStorage.setItem(localStorageIdPrefix + id, expression);
+    const existingExpressions: LocalStorageExpressionsArray = JSON.parse(
+      localStorage.getItem(localStorageExpressionsArray) || '[]'
+    );
+    const newExpression = { id, expression };
+    const updatedExpressions = existingExpressions.some((item) => item.id === id)
+      ? existingExpressions.map((item) =>
+          item.id === id ? { ...item, expression } : item
+        )
+      : [...existingExpressions, newExpression];
+
+    localStorage.setItem(
+      localStorageExpressionsArray,
+      JSON.stringify(updatedExpressions)
+    );
   }, [expression, id]);
 
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -42,7 +64,7 @@ export default function useEval(id: number) {
   };
 
   const clearExpression = () => {
-    localStorage.setItem(localStorageIdPrefix + id, '');
+    localStorage.setItem(localStorageExpressionsArray + id, '');
   };
 
   return [expression, result, onChange, clearExpression] as const;

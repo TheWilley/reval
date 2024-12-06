@@ -5,3 +5,8 @@ export type EvalObject = {
     value: string;
   };
 };
+
+export type LocalStorageExpressionsArray = {
+  id: number;
+  expression: string;
+}[];

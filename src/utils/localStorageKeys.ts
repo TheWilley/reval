@@ -1,2 +1,2 @@
 export const localStorageIdsArray = 'reval-ids';
-export const localStorageIdPrefix = 'reval-id-';
+export const localStorageExpressionsArray = 'reval-expressions';
