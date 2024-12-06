@@ -64,7 +64,19 @@ export default function useEval(id: number) {
   };
 
   const clearExpression = () => {
-    localStorage.setItem(localStorageExpressionsArray + id, '');
+    const existingExpressions: LocalStorageExpressionsArray = JSON.parse(
+      localStorage.getItem(localStorageExpressionsArray) || '[]'
+    );
+    const updatedExpressions =
+      existingExpressions.some((item) => item.id === id) &&
+      existingExpressions.map((item) =>
+        item.id === id ? { ...item, expression: '' } : item
+      );
+
+    localStorage.setItem(
+      localStorageExpressionsArray,
+      JSON.stringify(updatedExpressions)
+    );
   };
 
   return [expression, result, onChange, clearExpression] as const;
