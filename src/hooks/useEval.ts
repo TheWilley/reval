@@ -24,7 +24,7 @@ export default function useEval(id: number) {
 
   const evaluate = (expr: string): EvalObject['result'] => {
     try {
-      const evalResult = eval(expr); // ⚠️ Ensure eval usage is intentional and safe.
+      const evalResult = eval?.(`"use strict";(${expr})`);
       return { state: 'success', value: String(evalResult) };
     } catch (error) {
       return { state: 'error', value: String(error) };
