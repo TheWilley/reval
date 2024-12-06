@@ -27,7 +27,7 @@
 
 ## Getting Started
 
-Simply go to the [official webpage](link) to get started, or run the app yourself by following these steps:
+Simply go to the [official webpage](https://thewilley.github.io/reval/) to get started, or run the app yourself by following these steps:
 
 ```
 # Clone this repository
