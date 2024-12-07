@@ -4,8 +4,14 @@
 </h1>
 <h4 align="center">Quick and easy evaluation of JavaScript code.
 <br>
+<br>
 
 </h4>
+
+<p align="center">
+  <img src="https://github.com/TheWilley/reval/actions/workflows/main.yml/badge.svg" alt="Tests">
+</p>
+
 <p align="center">
   <a href="#features">Features</a> •
   <a href="#introduction">Introduction</a> •
