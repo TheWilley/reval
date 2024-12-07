@@ -29,36 +29,34 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
       className='rounded-lg shadow-md transition-all duration-300 ease-in-out'
       style={{ opacity, maxHeight, translate: `0px ${rotate}` }}
     >
-      <div className='grid grid-cols-1 items-center gap-4 p-4 md:grid-cols-[7%_53%_40%]'>
-        <div className='grid grid-cols-2'>
-          <div>
-            <button
-              className='btn btn-warning btn-sm mb-2 mt-2 rounded-md px-3 py-1'
-              onClick={remove}
-              data-testid='remove'
-            >
-              Remove
-            </button>
-            <select
-              className='select select-sm'
-              value={mode}
-              onChange={(e) => setMode(e.target.value as 'eval' | 'math')}
-              data-testid='mode'
-            >
-              <option disabled>Mode</option>
-              <option value='eval' defaultChecked>
-                Eval
-              </option>
-              <option value='math'>Math</option>
-            </select>
-          </div>
+      <div className='grid grid-cols-1 items-center gap-4 p-4 lg:grid-cols-[7%_50%_40%]'>
+        <div className='flex items-center justify-center gap-2 lg:block'>
+          <button
+            className='btn btn-warning btn-sm mb-2 mt-2 w-full max-w-[8em] rounded-md px-3 py-1'
+            onClick={remove}
+            data-testid='remove'
+          >
+            Remove
+          </button>
+          <select
+            className='select select-sm w-full max-w-[8em]'
+            value={mode}
+            onChange={(e) => setMode(e.target.value as 'eval' | 'math')}
+            data-testid='mode'
+          >
+            <option disabled>Mode</option>
+            <option value='eval' defaultChecked>
+              Eval
+            </option>
+            <option value='math'>Math</option>
+          </select>
         </div>
-        <hr className='opacity-10 md:hidden' />
+        <hr className='opacity-10 lg:hidden' />
         <div className='flex justify-center'>
           <TextArea expression={expression} onChange={onChange} />
         </div>
 
-        <hr className='opacity-10 md:hidden' />
+        <hr className='opacity-10 lg:hidden' />
         <div className='flex items-center justify-center'>
           <Result state={result.state} value={result.value} />
         </div>
