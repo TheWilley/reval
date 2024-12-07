@@ -1,18 +1,16 @@
-export type EvalObject = {
-  expression: string;
-  result: {
-    state: 'error' | 'neutral' | 'success';
-    value: string;
-  };
+export type EvalResult = {
+  state: 'error' | 'neutral' | 'success';
+  value: string;
 };
 
-export type LocalStorageExpressionsArray = {
+export type Expression = {
   id: number;
   expression: string;
-}[];
+  mode: 'eval' | 'math';
+};
 
 export type SaveFile = {
   id: 'reval';
   ids: number[];
-  expressions: LocalStorageExpressionsArray[];
+  expressions: Expression[];
 };

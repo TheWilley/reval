@@ -1,7 +1,7 @@
-import { EvalObject } from '../types/types';
+import { EvalResult } from '../types/types';
 
 // Helper function to determine the color based on result state
-const getColorFromState = (state: EvalObject['result']['state']) => {
+const getColorFromState = (state: EvalResult['state']) => {
   if (state === 'error') {
     return 'red';
   } else if (state === 'neutral') {
@@ -11,13 +11,7 @@ const getColorFromState = (state: EvalObject['result']['state']) => {
   }
 };
 
-function Result({
-  value,
-  state,
-}: {
-  value: string;
-  state: EvalObject['result']['state'];
-}) {
+function Result({ value, state }: { value: string; state: EvalResult['state'] }) {
   return (
     <span
       className='break-words'
