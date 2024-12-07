@@ -1,25 +1,41 @@
+import { useState } from 'react';
 import { EvalResult } from '../types/types';
 
 // Helper function to determine the color based on result state
 const getColorFromState = (state: EvalResult['state']) => {
   if (state === 'error') {
-    return 'red';
+    return 'text-red-500';
   } else if (state === 'neutral') {
-    return '#F6BE00';
+    return 'text-yellow-500';
   } else {
-    return 'green';
+    return 'text-green-500';
   }
 };
 
 function Result({ value, state }: { value: string; state: EvalResult['state'] }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const truncatedValue =
+    value.length > 200 && !isExpanded ? `${value.slice(0, 160)}...` : value;
+
   return (
-    <span
-      className='break-words'
-      style={{ color: getColorFromState(state) }}
-      data-testid='result'
-    >
-      {value}
-    </span>
+    <div className='flex flex-col gap-2'>
+      <div
+        className={`overflow-hidden whitespace-pre-wrap break-words p-5 ${getColorFromState(state)}`}
+        style={{ maxHeight: isExpanded ? 'none' : '10rem' }}
+        data-testid='result'
+      >
+        {truncatedValue}
+      </div>
+      {value.length > 200 && (
+        <button
+          className='btn btn-sm w-full bg-base-100 text-blue-500'
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          {isExpanded ? 'Show Less' : 'Show More'}
+        </button>
+      )}
+    </div>
   );
 }
 
