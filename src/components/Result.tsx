@@ -21,7 +21,7 @@ function Result({ value, state }: { value: string; state: EvalResult['state'] })
   return (
     <div className='h-full w-full gap-2'>
       <div
-        className={`mt-2 overflow-hidden whitespace-pre-wrap break-words rounded-lg border-2 border-base-100 p-5 ${getColorFromState(state)}`}
+        className={`mt-2 overflow-hidden whitespace-pre-wrap break-words rounded-lg border-2 border-base-100 p-6 ${getColorFromState(state)}`}
         style={{ maxHeight: isExpanded ? 'none' : '10rem' }}
         data-testid='result'
       >
