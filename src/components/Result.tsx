@@ -29,7 +29,7 @@ function Result({ value, state }: { value: string; state: EvalResult['state'] })
       </div>
       {value.length > 200 && (
         <button
-          className='btn btn-sm w-full bg-base-100 text-blue-500'
+          className='btn btn-sm mt-2 w-full bg-base-100 text-blue-500'
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {isExpanded ? 'Show Less' : 'Show More'}
