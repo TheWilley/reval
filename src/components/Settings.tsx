@@ -1,11 +1,11 @@
-import { faKeyboard } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function KeyboardShortcuts() {
+function Settings() {
   return (
     <>
       <FontAwesomeIcon
-        icon={faKeyboard}
+        icon={faCog}
         onClick={() =>
           (document.getElementById('my_modal_1') as HTMLDialogElement).showModal()
         }
@@ -13,16 +13,11 @@ function KeyboardShortcuts() {
       />
       <dialog id='my_modal_1' className='modal'>
         <div className='modal-box'>
-          <h3 className='text-lg font-bold'>Keyboard Shortucts</h3>
-          <ul className='p-3'>
-            <li>
-              <kbd className='kbd'>Alt + Enter</kbd> <span className='m-2'>-</span>{' '}
-              <span> Add new item </span>
-            </li>
-          </ul>
+          <h3 className='mb-4 text-lg font-bold'>Settings</h3>
+          <div>Settings here...</div>
           <div className='modal-action flex justify-center'>
             <form method='dialog'>
-              <button className='btn'>Close</button>
+              <button className='btn'>Save</button>
             </form>
           </div>
         </div>
@@ -31,4 +26,4 @@ function KeyboardShortcuts() {
   );
 }
 
-export default KeyboardShortcuts;
+export default Settings;
