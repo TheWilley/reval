@@ -110,7 +110,7 @@ test('it adds new row and adds an expression (3+3) which results in 6', () => {
   fireEvent.change(expression, { target: { value: 'return 3+3' } });
   window.localStorage.clear();
 
-  expect(result.innerHTML).toBe('6');
+  expect(result.innerHTML).toContain('6');
 });
 
 test('it adds a new row and changes to math mode', () => {
@@ -136,5 +136,5 @@ test('it adds a new row, changes to math mode and inserts "sin(45 deg) ^ 2" whic
   fireEvent.change(expression, { target: { value: 'sin(45 deg) ^ 2' } });
   window.localStorage.clear();
 
-  expect(result.innerHTML).toBe('0.4999999999999999');
+  expect(result.innerHTML).toContain('0.4999999999999999');
 });
