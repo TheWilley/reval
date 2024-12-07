@@ -19,7 +19,7 @@ function Result({ value, state }: { value: string; state: EvalResult['state'] })
     value.length > 200 && !isExpanded ? `${value.slice(0, 160)}...` : value;
 
   return (
-    <div className='flex h-full w-full flex-col justify-center gap-2'>
+    <div className='h-full w-full gap-2'>
       <div
         className={`mt-2 overflow-hidden whitespace-pre-wrap break-words rounded-lg border-2 border-base-100 p-5 ${getColorFromState(state)}`}
         style={{ maxHeight: isExpanded ? 'none' : '10rem' }}
