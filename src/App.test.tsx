@@ -60,6 +60,7 @@ beforeEach(() => {
 
 test('it renders header', () => {
   const linkElement = screen.getByText(/reval/i);
+
   expect(linkElement).toBeDefined();
 });
 
@@ -68,6 +69,7 @@ test('it adds new row', () => {
   fireEvent.click(linkElement);
   const row = screen.getByTestId('expression');
   window.localStorage.clear();
+
   expect(row).toBeDefined();
 });
 
@@ -80,6 +82,7 @@ test('it adds 5 new rows', () => {
 
   const expressions = screen.getAllByTestId('expression');
   window.localStorage.clear();
+
   expect(expressions.length).toBe(5);
 });
 
@@ -94,6 +97,7 @@ test('it adds 5 new rows, then removes 1', async () => {
   fireEvent.click(remove[0]);
   await waitFor(() => {
     window.localStorage.clear();
+
     expect(screen.queryAllByTestId('expression').length).toBe(4);
   });
 });
@@ -104,5 +108,33 @@ test('it adds new row and adds an expression (3+3) which results in 6', () => {
   const expression = screen.getByTestId('expression');
   const result = screen.getByTestId('result');
   fireEvent.change(expression, { target: { value: '3+3' } });
+  window.localStorage.clear();
+
   expect(result.innerHTML).toBe('6');
+});
+
+test('it adds a new row and changes to math mode', () => {
+  const linkElement = screen.getByText('Alt + Enter or click here to add row');
+  fireEvent.click(linkElement);
+  const selectElement = screen.getByTestId('mode');
+  const selectElemetOptions = selectElement.childNodes;
+  fireEvent.change(selectElement, { target: { value: 'math' } });
+  window.localStorage.clear();
+
+  expect((selectElemetOptions[0] as HTMLOptionElement).selected).toBeFalsy();
+  expect((selectElemetOptions[1] as HTMLOptionElement).selected).toBeFalsy();
+  expect((selectElemetOptions[2] as HTMLOptionElement).selected).toBeTruthy();
+});
+
+test('it adds a new row, changes to math mode and inserts "sin(45 deg) ^ 2" which results in 0.4999999999999999', () => {
+  const linkElement = screen.getByText('Alt + Enter or click here to add row');
+  fireEvent.click(linkElement);
+  const selectElement = screen.getByTestId('mode');
+  fireEvent.change(selectElement, { target: { value: 'math' } });
+  const expression = screen.getByTestId('expression');
+  const result = screen.getByTestId('result');
+  fireEvent.change(expression, { target: { value: 'sin(45 deg) ^ 2' } });
+  window.localStorage.clear();
+
+  expect(result.innerHTML).toBe('0.4999999999999999');
 });

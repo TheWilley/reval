@@ -43,6 +43,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
               className='select select-sm'
               value={mode}
               onChange={(e) => setMode(e.target.value as 'eval' | 'math')}
+              data-testid='mode'
             >
               <option disabled>Mode</option>
               <option value='eval' defaultChecked>
