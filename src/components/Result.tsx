@@ -19,13 +19,13 @@ function Result({ value, state }: { value: string; state: EvalResult['state'] })
     value.length > 200 && !isExpanded ? `${value.slice(0, 160)}...` : value;
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex h-full w-full flex-col justify-center gap-2'>
       <div
-        className={`overflow-hidden whitespace-pre-wrap break-words p-5 ${getColorFromState(state)}`}
+        className={`mt-2 overflow-hidden whitespace-pre-wrap break-words rounded-lg border-2 border-base-100 p-5 ${getColorFromState(state)}`}
         style={{ maxHeight: isExpanded ? 'none' : '10rem' }}
         data-testid='result'
       >
-        {truncatedValue}
+        <div className='flex justify-center'>{truncatedValue}</div>
       </div>
       {value.length > 200 && (
         <button
