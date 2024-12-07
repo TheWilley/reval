@@ -1,6 +1,7 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { EvalObject, LocalStorageExpressionsArray } from '../types/types';
 import { localStorageExpressionsArray } from '../utils/localStorageKeys';
+import { evaluate as math } from 'mathjs';
 
 export default function useEval(id: number) {
   const [expression, setExpression] = useState<EvalObject['expression']>(() => {
@@ -22,14 +23,30 @@ export default function useEval(id: number) {
     value: 'please write an expression',
   });
 
-  const evaluate = (expr: string): EvalObject['result'] => {
-    try {
-      const evalResult = eval?.(`"use strict";(${expr})`);
-      return { state: 'success', value: String(evalResult) };
-    } catch (error) {
-      return { state: 'error', value: String(error) };
-    }
-  };
+  const [mode, setMode] = useState<'eval' | 'math'>('eval');
+
+  const evaluate = useCallback(
+    (expr: string): EvalObject['result'] => {
+      if (mode === 'eval') {
+        try {
+          const evalResult = eval?.(`"use strict";(${expr})`);
+          return { state: 'success', value: String(evalResult) };
+        } catch (error) {
+          return { state: 'error', value: String(error) };
+        }
+      } else if (mode === 'math') {
+        try {
+          const mathResult = math(expr);
+          return { state: 'success', value: String(mathResult) };
+        } catch (error) {
+          return { state: 'error', value: String((error as Error).message) };
+        }
+      } else {
+        return { state: 'neutral', value: '' };
+      }
+    },
+    [mode]
+  );
 
   useEffect(() => {
     if (!expression) {
@@ -40,7 +57,7 @@ export default function useEval(id: number) {
     } else {
       setResult(evaluate(expression));
     }
-  }, [expression]);
+  }, [evaluate, expression, mode]);
 
   useEffect(() => {
     const existingExpressions: LocalStorageExpressionsArray = JSON.parse(
@@ -79,5 +96,5 @@ export default function useEval(id: number) {
     );
   };
 
-  return [expression, result, onChange, clearExpression] as const;
+  return [expression, result, mode, onChange, clearExpression, setMode] as const;
 }

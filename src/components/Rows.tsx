@@ -13,8 +13,8 @@ function Rows({
     <>
       <div className='overflow-x-hidden rounded-md bg-base-200 text-left transition-all'>
         <ul>
-          {ids.map((id, index) => (
-            <Row key={id} id={id} visibleId={index} removeElement={removeElement} />
+          {ids.map((id) => (
+            <Row key={id} id={id} removeElement={removeElement} />
           ))}
         </ul>
       </div>

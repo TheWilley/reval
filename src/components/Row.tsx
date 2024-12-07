@@ -3,16 +3,8 @@ import useEval from '../hooks/useEval';
 import Result from './Result';
 import { useEffect, useState } from 'react';
 
-function Row({
-  id,
-  visibleId,
-  removeElement,
-}: {
-  id: number;
-  visibleId: number;
-  removeElement: (id: number) => void;
-}) {
-  const [expression, result, onChange, clearExpression] = useEval(id);
+function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
+  const [expression, result, mode, onChange, clearExpression, setMode] = useEval(id);
   const [opacity, setOpacity] = useState('0%');
   const [rotate, setRotate] = useState('-20px');
   const [maxHeight, setMaxHeight] = useState('999px');
@@ -37,16 +29,28 @@ function Row({
       className='rounded-lg shadow-md transition-all duration-300 ease-in-out'
       style={{ opacity, maxHeight, translate: `0px ${rotate}` }}
     >
-      <div className='grid grid-cols-1 items-center gap-4 p-4 md:grid-cols-[10%_50%_40%]'>
-        <div className='flex flex-col items-center'>
-          <div className='font-mono text-xl'>{visibleId}</div>
-          <button
-            className='btn btn-warning btn-sm mt-2 rounded-md px-3 py-1'
-            onClick={remove}
-            data-testid='remove'
-          >
-            Remove
-          </button>
+      <div className='grid grid-cols-1 items-center gap-4 p-4 md:grid-cols-[7%_53%_40%]'>
+        <div className='grid grid-cols-2'>
+          <div>
+            <button
+              className='btn btn-warning btn-sm mb-2 mt-2 rounded-md px-3 py-1'
+              onClick={remove}
+              data-testid='remove'
+            >
+              Remove
+            </button>
+            <select
+              className='select select-sm'
+              value={mode}
+              onChange={(e) => setMode(e.target.value as 'eval' | 'math')}
+            >
+              <option disabled>Mode</option>
+              <option value='eval' defaultChecked>
+                Eval
+              </option>
+              <option value='math'>Math</option>
+            </select>
+          </div>
         </div>
         <hr className='opacity-10 md:hidden' />
         <div className='flex justify-center'>
