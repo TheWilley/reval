@@ -21,9 +21,15 @@
 
 ## Features
 
-- Easily evalutate javascript expressions
+- Evalutate multiple javascript expressions at the same time
+- Sandboxed environment
+- Built-in sypport for [mathjs](https://mathjs.org) expressions
 - Save and load your expressions
 - Minimal user interface
+
+## Introduction
+
+I was getting tired of creating a new HTML file each time I needed to quickly test out things in JavaScript, so I created this web app to fufill that purpose instead. Contrary to its name, the app does not run the [eval function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_direct_eval!) directly due to [security concerns](https://www.digitalocean.com/community/tutorials/js-eval). It instead leverages [SandboxJS](https://github.com/nyariv/SandboxJS) and [math.js](https://mathjs.org) to run expressions in a safe manner.
 
 ## Getting Started
 
@@ -38,6 +44,9 @@ $ cd reval
 
 # Install dependencies
 $ npm i
+
+# Run tests
+$ npm run test
 
 # Start development server
 $ npm run dev
