@@ -49,6 +49,7 @@ function TextArea({
         minHeight: MIN_TEXTAREA_HEIGHT,
         resize: 'none',
       }}
+      placeholder='Write an expression here...'
       data-testid='expression'
     />
   );
