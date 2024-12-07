@@ -8,7 +8,10 @@ function TextArea({
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }) {
   return (
-    <div className='grow-wrap grid w-full' data-replicated-value={expression}>
+    <div
+      className='grow-wrap textarea grid w-full p-0 outline-none'
+      data-replicated-value={expression}
+    >
       <textarea
         value={expression}
         onChange={onChange}
