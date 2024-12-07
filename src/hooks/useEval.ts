@@ -1,7 +1,8 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { EvalResult, Expression } from '../types/types';
 import { localStorageExpressionsArray } from '../utils/localStorageKeys';
 import { evaluate as math } from 'mathjs';
+import Sandbox from '@nyariv/sandboxjs';
 
 export default function useEval(id: number) {
   // State initialization
@@ -10,18 +11,19 @@ export default function useEval(id: number) {
   );
   const [result, setResult] = useState<EvalResult>(defaultResult);
   const [mode, setMode] = useState<'eval' | 'math'>(() => initializeMode(id));
+  const sandbox = useMemo(() => new Sandbox(), []);
 
   // Evaluate the expression based on the current mode
   const evaluate = useCallback(
     (expr: string): EvalResult => {
       try {
-        const evaluation = mode === 'eval' ? eval(`"use strict";(${expr})`) : math(expr);
+        const evaluation = mode === 'eval' ? sandbox.compile(expr)({}).run() : math(expr);
         return { state: 'success', value: String(evaluation) };
       } catch (error) {
         return { state: 'error', value: String((error as Error).message) };
       }
     },
-    [mode]
+    [mode, sandbox]
   );
 
   // Update the result whenever the expression or mode changes

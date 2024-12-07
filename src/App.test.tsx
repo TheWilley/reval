@@ -107,7 +107,7 @@ test('it adds new row and adds an expression (3+3) which results in 6', () => {
   fireEvent.click(linkElement);
   const expression = screen.getByTestId('expression');
   const result = screen.getByTestId('result');
-  fireEvent.change(expression, { target: { value: '3+3' } });
+  fireEvent.change(expression, { target: { value: 'return 3+3' } });
   window.localStorage.clear();
 
   expect(result.innerHTML).toBe('6');
