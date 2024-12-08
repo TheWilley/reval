@@ -43,7 +43,7 @@ export default function useEval(id: number) {
 
   const clearExpression = () => {
     setExpression('');
-    updateLocalStorage(id, '', mode);
+    removeLocalStorageExpression(id);
   };
 
   return [expression, result, mode, onChange, clearExpression, setMode] as const;
@@ -83,5 +83,11 @@ function updateLocalStorage(
       )
     : [...savedExpressions, { id, expression, mode }];
 
+  localStorage.setItem(localStorageExpressionsArray, JSON.stringify(updatedExpressions));
+}
+
+function removeLocalStorageExpression(id: number) {
+  const savedExpressions = getSavedExpressions();
+  const updatedExpressions = savedExpressions.filter((item) => item.id !== id);
   localStorage.setItem(localStorageExpressionsArray, JSON.stringify(updatedExpressions));
 }
