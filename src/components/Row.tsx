@@ -26,7 +26,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
 
   return (
     <li
-      className='rounded-lg shadow-md transition-all duration-300 ease-in-out'
+      className='rounded-lg shadow-lg transition-all duration-300 ease-in-out'
       style={{ opacity, maxHeight, translate: `0px ${rotate}` }}
     >
       <div className='grid grid-cols-1 gap-4 p-4 lg:grid-cols-[7%_50%_40%]'>
