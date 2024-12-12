@@ -16,12 +16,7 @@ function FileLoader({ onFileLoad }: { onFileLoad: (data: SaveFile) => void }) {
         const text = e.target?.result as string;
         const parsedData = JSON.parse(text);
 
-        if (
-          typeof parsedData.id === 'string' &&
-          parsedData.id === 'reval' &&
-          Array.isArray(parsedData.ids) &&
-          Array.isArray(parsedData.expressions)
-        ) {
+        if (typeof parsedData.id === 'string' && parsedData.id === 'reval') {
           onFileLoad(parsedData as SaveFile);
         } else {
           throw new Error('Invalid file format');
