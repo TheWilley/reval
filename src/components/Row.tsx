@@ -51,12 +51,9 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
             <option value='math'>Math</option>
           </select>
         </div>
-        <hr className='opacity-10 lg:hidden' />
         <div className='mt-2 flex justify-center'>
           <TextArea expression={expression} onChange={onChange} />
         </div>
-
-        <hr className='opacity-10 lg:hidden' />
         <div className='flex items-center justify-center'>
           <Result state={result.state} value={result.value} />
         </div>
