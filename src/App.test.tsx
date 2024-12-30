@@ -126,6 +126,16 @@ test('it adds a new row and changes to math mode', () => {
   expect((selectElemetOptions[2] as HTMLOptionElement).selected).toBeTruthy();
 });
 
+test('placeholder can be changed', () => {
+  const linkElement = screen.getByText('Alt + Enter or click here to add row');
+  fireEvent.click(linkElement);
+  const selectElement = screen.getByTestId('mode');
+  fireEvent.change(selectElement, { target: { value: 'math' } });
+  window.localStorage.clear();
+
+  expect(screen.getByPlaceholderText('Write a math expression here...')).toBeTruthy();
+});
+
 test('it adds a new row, changes to math mode and inserts "sin(45 deg) ^ 2" which results in 0.4999999999999999', () => {
   const linkElement = screen.getByText('Alt + Enter or click here to add row');
   fireEvent.click(linkElement);

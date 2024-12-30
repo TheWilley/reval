@@ -5,8 +5,16 @@ import { useEffect, useState } from 'react';
 import { plugins } from '../plugins/plugins';
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
-  const { expression, result, mode, pluginList, onChange, clearExpression, setMode } =
-    useEval(id, plugins);
+  const {
+    expression,
+    result,
+    mode,
+    pluginList,
+    placeholder,
+    onChange,
+    clearExpression,
+    setMode,
+  } = useEval(id, plugins);
   const [opacity, setOpacity] = useState('0%');
   const [rotate, setRotate] = useState('-20px');
   const [maxHeight, setMaxHeight] = useState('999px');
@@ -55,7 +63,11 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
           </select>
         </div>
         <div className='mt-2 flex justify-center'>
-          <TextArea expression={expression} onChange={onChange} />
+          <TextArea
+            expression={expression}
+            placeholder={placeholder}
+            onChange={onChange}
+          />
         </div>
         <div className='flex items-center justify-center'>
           <Result state={result.state} value={result.value} />

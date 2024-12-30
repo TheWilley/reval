@@ -6,10 +6,13 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
   const [expression, setExpression] = useState<Expression['expression']>(() =>
     initializeExpression(id)
   );
-
   const [result, setResult] = useState<EvalResult>(defaultResult);
   const [mode, setMode] = useState<keyof typeof availablePlugins>(() =>
     initializeMode(id, availablePlugins)
+  );
+  const placeholder = useMemo(
+    () => availablePlugins[mode].placeholderText,
+    [availablePlugins, mode]
   );
 
   const pluginList = useMemo(
@@ -58,6 +61,7 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
     expression,
     result,
     mode,
+    placeholder,
     pluginList,
     onChange,
     clearExpression,

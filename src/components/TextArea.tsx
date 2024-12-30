@@ -2,9 +2,11 @@ import { ChangeEvent } from 'react';
 
 function TextArea({
   expression,
+  placeholder,
   onChange,
 }: {
   expression: string | undefined;
+  placeholder: string | undefined;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }) {
   return (
@@ -16,7 +18,7 @@ function TextArea({
         value={expression}
         onChange={onChange}
         className='textarea resize-none overflow-hidden font-mono'
-        placeholder='Write an expression here...'
+        placeholder={placeholder || 'Write an expression here...'}
         data-testid='expression'
       />
     </div>
