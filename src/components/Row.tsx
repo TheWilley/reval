@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { plugins } from '../plugins/plugins';
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
-  const [expression, result, mode, pluginList, onChange, clearExpression, setMode] =
+  const { expression, result, mode, pluginList, onChange, clearExpression, setMode } =
     useEval(id, plugins);
   const [opacity, setOpacity] = useState('0%');
   const [rotate, setRotate] = useState('-20px');

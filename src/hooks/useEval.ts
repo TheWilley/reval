@@ -54,7 +54,7 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
     removeLocalStorageExpression(id);
   };
 
-  return [
+  return {
     expression,
     result,
     mode,
@@ -62,7 +62,7 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
     onChange,
     clearExpression,
     setMode,
-  ] as const;
+  };
 }
 
 const defaultResult: EvalResult = {
