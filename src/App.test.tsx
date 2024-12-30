@@ -126,7 +126,7 @@ test('it adds a new row and changes to math mode', () => {
   expect((selectElemetOptions[2] as HTMLOptionElement).selected).toBeTruthy();
 });
 
-test('placeholder can be changed', () => {
+test('it changes placeholder', () => {
   const linkElement = screen.getByText('Alt + Enter or click here to add row');
   fireEvent.click(linkElement);
   const selectElement = screen.getByTestId('mode');
