@@ -2,9 +2,11 @@ import TextArea from './TextArea';
 import useEval from '../hooks/useEval';
 import Result from './Result';
 import { useEffect, useState } from 'react';
+import { plugins } from '../plugins/plugins';
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
-  const [expression, result, mode, onChange, clearExpression, setMode] = useEval(id);
+  const [expression, result, mode, pluginList, onChange, clearExpression, setMode] =
+    useEval(id, plugins);
   const [opacity, setOpacity] = useState('0%');
   const [rotate, setRotate] = useState('-20px');
   const [maxHeight, setMaxHeight] = useState('999px');
@@ -41,14 +43,15 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
           <select
             className='select select-sm w-full max-w-[8em]'
             value={mode}
-            onChange={(e) => setMode(e.target.value as 'eval' | 'math')}
+            onChange={(e) => setMode(e.target.value)}
             data-testid='mode'
           >
             <option disabled>Mode</option>
-            <option value='eval' defaultChecked>
-              Eval
-            </option>
-            <option value='math'>Math</option>
+            {pluginList.map((plugin, index) => (
+              <option value={plugin.key} defaultChecked={index === 0} key={plugin.key}>
+                {plugin.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className='mt-2 flex justify-center'>

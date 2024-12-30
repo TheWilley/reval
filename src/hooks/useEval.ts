@@ -1,42 +1,50 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { EvalResult, Expression } from '../types/types';
+import { EvalResult, Expression, Plugin } from '../types/types';
 import { localStorageExpressionsArray } from '../utils/localStorageKeys';
-import { evaluate as math } from 'mathjs';
-import Sandbox from '@nyariv/sandboxjs';
 
-export default function useEval(id: number) {
-  // State initialization
+export default function useEval(id: number, availablePlugins: Record<string, Plugin>) {
   const [expression, setExpression] = useState<Expression['expression']>(() =>
     initializeExpression(id)
   );
-  const [result, setResult] = useState<EvalResult>(defaultResult);
-  const [mode, setMode] = useState<'eval' | 'math'>(() => initializeMode(id));
-  const sandbox = useMemo(() => new Sandbox(), []);
 
-  // Evaluate the expression based on the current mode
+  const [result, setResult] = useState<EvalResult>(defaultResult);
+  const [mode, setMode] = useState<keyof typeof availablePlugins>(() =>
+    initializeMode(id, availablePlugins)
+  );
+
+  const pluginList = useMemo(
+    () =>
+      Object.entries(availablePlugins).map(([key, plugin]) => ({
+        key,
+        name: plugin.name,
+      })),
+    [availablePlugins]
+  );
+
   const evaluate = useCallback(
     (expr: string): EvalResult => {
       try {
-        const evaluation = mode === 'eval' ? sandbox.compile(expr)({}).run() : math(expr);
+        const plugin = availablePlugins[mode];
+        if (!plugin) {
+          throw new Error(`No plugin available for mode: ${mode}`);
+        }
+        const evaluation = plugin.evaluate(expr);
         return { state: 'success', value: String(evaluation) };
       } catch (error) {
         return { state: 'error', value: String((error as Error).message) };
       }
     },
-    [mode, sandbox]
+    [mode, availablePlugins]
   );
 
-  // Update the result whenever the expression or mode changes
   useEffect(() => {
     setResult(expression ? evaluate(expression) : defaultResult);
   }, [evaluate, expression]);
 
-  // Persist changes to expression and mode in localStorage
   useEffect(() => {
     updateLocalStorage(id, expression, mode);
   }, [expression, mode, id]);
 
-  // Handlers for UI interactions
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setExpression(e.target.value);
   };
@@ -46,10 +54,17 @@ export default function useEval(id: number) {
     removeLocalStorageExpression(id);
   };
 
-  return [expression, result, mode, onChange, clearExpression, setMode] as const;
+  return [
+    expression,
+    result,
+    mode,
+    pluginList,
+    onChange,
+    clearExpression,
+    setMode,
+  ] as const;
 }
 
-// Helper functions
 const defaultResult: EvalResult = {
   state: 'neutral',
   value: 'please write an expression',
@@ -61,10 +76,13 @@ function initializeExpression(id: number): Expression['expression'] {
   return foundItem ? foundItem.expression : '';
 }
 
-function initializeMode(id: number): 'eval' | 'math' {
+function initializeMode(
+  id: number,
+  availablePlugins: Record<string, Plugin>
+): keyof typeof availablePlugins {
   const savedExpressions = getSavedExpressions();
   const foundItem = savedExpressions.find((item) => Number(item.id) === id);
-  return foundItem ? foundItem.mode : 'eval';
+  return foundItem && availablePlugins[foundItem.mode] ? foundItem.mode : 'eval';
 }
 
 function getSavedExpressions(): Expression[] {
@@ -74,7 +92,7 @@ function getSavedExpressions(): Expression[] {
 function updateLocalStorage(
   id: number,
   expression: Expression['expression'],
-  mode: 'eval' | 'math'
+  mode: string
 ) {
   const savedExpressions = getSavedExpressions();
   const updatedExpressions = savedExpressions.some((item) => item.id === id)

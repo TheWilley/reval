@@ -14,3 +14,10 @@ export type SaveFile = {
   ids: number[];
   expressions: Expression[];
 };
+
+export type Plugin = {
+  evaluate: (expression: string) => string;
+  name: string;
+};
+
+export type Plugins = Record<string, Plugin>;
