@@ -6,7 +6,7 @@ export type EvalResult = {
 export type Expression = {
   id: number;
   expression: string;
-  mode: 'eval' | 'math';
+  mode: string;
 };
 
 export type SaveFile = {
@@ -18,6 +18,7 @@ export type SaveFile = {
 export type Plugin = {
   evaluate: (expression: string) => string;
   name: string;
+  placeholderText?: string;
 };
 
 export type Plugins = Record<string, Plugin>;
