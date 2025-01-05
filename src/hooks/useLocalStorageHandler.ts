@@ -1,4 +1,4 @@
-export default function useSettings() {
+export default function useLocalStorageHandler() {
   const removeExpressions = () => {
     if (confirm('Are you sure you want to remove all expressions?')) {
       localStorage.clear();

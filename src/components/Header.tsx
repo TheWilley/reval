@@ -1,7 +1,7 @@
 import useSaveLoad from '../hooks/useSaveLoad';
 import FileLoader from './FileLoader';
 import FileSaver from './FileSaver';
-import Settings from './Settings';
+import Settings from './settings/Settings';
 
 function Header() {
   const [save, load] = useSaveLoad();
