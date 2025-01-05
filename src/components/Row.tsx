@@ -3,6 +3,7 @@ import useEval from '../hooks/useEval';
 import Result from './Result';
 import { useEffect, useState } from 'react';
 import { plugins } from '../plugins/plugins';
+import PluginOptions from './PluginOptions';
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
   const {
@@ -11,8 +12,11 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
     mode,
     pluginList,
     placeholder,
+    currentPlugin,
+    pluginOptions,
     onChange,
     clearExpression,
+    setPluginOptions,
     setMode,
   } = useEval(id, plugins);
   const [opacity, setOpacity] = useState('0%');
@@ -61,6 +65,18 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
               </option>
             ))}
           </select>
+          {currentPlugin.options && (
+            <PluginOptions
+              options={pluginOptions}
+              id={id}
+              onChange={(key, value) => {
+                setPluginOptions((prev = {}) => ({
+                  ...prev,
+                  [key]: { ...prev[key], value },
+                }));
+              }}
+            />
+          )}
         </div>
         <div className='mt-2 flex justify-center'>
           <TextArea
