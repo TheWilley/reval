@@ -14,9 +14,9 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
     placeholder,
     currentPlugin,
     pluginOptions,
-    onChange,
+    OnChangeExpression,
     clearExpression,
-    setPluginOptions,
+    onChangePluginOptions,
     setMode,
   } = useEval(id, plugins);
   const [opacity, setOpacity] = useState('0%');
@@ -69,12 +69,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
             <PluginOptions
               options={pluginOptions}
               id={id}
-              onChange={(key, value) => {
-                setPluginOptions((prev = {}) => ({
-                  ...prev,
-                  [key]: { ...prev[key], value },
-                }));
-              }}
+              onChange={onChangePluginOptions}
             />
           )}
         </div>
@@ -82,7 +77,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
           <TextArea
             expression={expression}
             placeholder={placeholder}
-            onChange={onChange}
+            onChange={OnChangeExpression}
           />
         </div>
         <div className='flex items-center justify-center'>

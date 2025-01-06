@@ -54,8 +54,15 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
     if (pluginOptions === undefined) setPluginOptions(currentPlugin.options);
   }, [mode, currentPlugin.options, pluginOptions]);
 
-  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const OnChangeExpression = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setExpression(e.target.value);
+  };
+
+  const onChangePluginOptions = (key: string, value: string) => {
+    setPluginOptions((prev = {}) => ({
+      ...prev,
+      [key]: { ...prev[key], value },
+    }));
   };
 
   const clearExpression = () => {
@@ -71,9 +78,9 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
     pluginList,
     currentPlugin,
     pluginOptions,
-    onChange,
+    OnChangeExpression,
     clearExpression,
-    setPluginOptions,
+    onChangePluginOptions,
     setMode,
   };
 }
