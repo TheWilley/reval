@@ -14,7 +14,6 @@ export type SaveFile = {
   id: 'reval';
   ids: number[];
   expressions: Expression[];
-  pluginOptions: PluginOption;
 };
 
 export type PluginOption = {
