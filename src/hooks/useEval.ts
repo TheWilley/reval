@@ -1,6 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { EvalResult, Expression, Plugin, PluginOption } from '../types/types';
 import { localStorageExpressionsArray } from '../utils/localStorageKeys';
+import usePrevious from './usePrevious';
 
 export default function useEval(id: number, availablePlugins: Record<string, Plugin>) {
   const [expression, setExpression] = useState<string>(() => initializeExpression(id));
@@ -16,6 +17,7 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
   const [pluginOptions, setPluginOptions] = useState(
     initializePluginOptions(id, currentPlugin.options)
   );
+  const previousPluginName = usePrevious(currentPlugin.name);
 
   const pluginList = useMemo(
     () =>
@@ -51,8 +53,12 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
   }, [expression, mode, id, pluginOptions]);
 
   useEffect(() => {
-    if (pluginOptions === undefined) setPluginOptions(currentPlugin.options);
-  }, [mode, currentPlugin.options, pluginOptions]);
+    if (
+      currentPlugin.options == undefined ||
+      (currentPlugin.name !== previousPluginName && previousPluginName !== undefined)
+    )
+      setPluginOptions(currentPlugin.options);
+  }, [currentPlugin.name, currentPlugin.options, previousPluginName]);
 
   const OnChangeExpression = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setExpression(e.target.value);
