@@ -18,7 +18,7 @@ A plugin is an object that adheres to the `Plugin` type, which includes:
 
 - **evaluate**: A function that processes an input expression based on provided options.
 - **name**: A descriptive name for the plugin.
-- **placeholderText** _(optional)_: Placeholder text for user interfaces.
+- **placeholderText** _(optional)_: Placeholder text.
 - **options** _(optional)_: Configuration options that the plugin can accept.
 
 ## Defining Plugin Options
@@ -101,11 +101,11 @@ const regexReplace = {
   - `flags`: Optional regex flags (e.g., `i` for case-insensitive).
 
 - **Notes**:
-  - Because the value of a given option is not given in the `evaluate` function, its important that you check what your option `type` is set to so you can handle the input appropriately. This is why I convert my options values to a string, as typescript otherwise will complain since it does not know which type is expected.
+  - Because the value of a option is not given in the `evaluate` function, its important that you check what your option `type` is set to so you can handle the input appropriately. This is why I convert my options values to a string, as typescript otherwise will complain since it does not know which type is expected.
 
 ## Registering the Plugin
 
-By default, all plugins are defined in one big chunk as a default exported object within `src/plugins/plugin.ts`.
+By default, all plugins are defined in one big chunk as a default exported object within `src/plugins/plugins.ts`.
 
 You can either add your plugin there directly, or define your plugin in a seperate object by using the `Plugin` type.
 
