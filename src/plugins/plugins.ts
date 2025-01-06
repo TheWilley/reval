@@ -17,8 +17,11 @@ export const plugins: Plugins = {
       if (!options || !options.regex) {
         throw new Error('Regex option is required');
       }
-      const regex = new RegExp(options.regex.value, options.flags.value || 'g');
-      return expression.replace(regex, options.replacement.value || '');
+      const regex = new RegExp(
+        String(options.regex.value),
+        String(options.flags.value) || 'g'
+      );
+      return expression.replace(regex, String(options.replacement.value) || '');
     },
     name: 'Regex Replace',
     placeholderText: 'Write text here...',

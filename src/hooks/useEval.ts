@@ -58,7 +58,7 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
     setExpression(e.target.value);
   };
 
-  const onChangePluginOptions = (key: string, value: string) => {
+  const onChangePluginOptions = (key: string, value: string | boolean | number) => {
     setPluginOptions((prev = {}) => ({
       ...prev,
       [key]: { ...prev[key], value },

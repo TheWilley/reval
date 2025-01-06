@@ -20,7 +20,7 @@ export type PluginOption = {
   [key: string]: {
     name: string;
     type: 'string' | 'boolean' | 'number';
-    value: string;
+    value: string | boolean | number;
   };
 };
 
