@@ -2,7 +2,7 @@
   reval
   <br>
 </h1>
-<h4 align="center">Quick and easy evaluation of JavaScript code.
+<h4 align="center">Quick and easy evaluation of expressions.
 <br>
 <br>
 
@@ -22,15 +22,14 @@
 
 ## Features
 
-- Evalutate multiple javascript expressions at the same time
-- Sandboxed environment
-- Built-in support for [math.js](https://mathjs.org) expressions
+- Evalutate multiple expressions at the same time
+- Built-in support for JavaScript (sandboxed), [math.js](https://mathjs.org), regex replace, and more
 - Save and load your expressions
 - Minimal user interface
 
 ## Introduction
 
-I was getting tired of creating a new HTML file each time I needed to quickly test out things in JavaScript, so I created this web app to fufill that purpose instead. Contrary to its name, the app does not run the [eval function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_direct_eval!) directly due to [security concerns](https://www.digitalocean.com/community/tutorials/js-eval). It instead leverages [SandboxJS](https://github.com/nyariv/SandboxJS) and [math.js](https://mathjs.org) to run expressions in a safe manner.
+I was getting tired of creating a new HTML file each time I needed to quickly test out things in JavaScript, so I initially created this web app to fulfill that purpose. It has since then grown into a dynamic system which support a variety of functionalities, such as evaluation of math and regex expressions.
 
 ## Getting Started
 
@@ -55,6 +54,10 @@ $ npm run dev
 # Build for production
 $ npm run build
 ```
+
+## Creating custom plugins
+
+See the [documentation](./docs/plugins.md).
 
 ## License
 
