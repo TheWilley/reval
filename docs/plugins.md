@@ -9,7 +9,6 @@ To facilitate easy extensibility, a plugin system has been implemented where an 
 3. [Implementing the Evaluate Function](#implementing-the-evaluate-function)
 4. [Example: Regex Replace Plugin](#example-regex-replace-plugin)
 5. [Registering the Plugin](#registering-the-plugin)
-6. [Conclusion](#conclusion)
 
 ---
 
