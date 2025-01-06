@@ -26,8 +26,9 @@ A plugin is an object that adheres to the `Plugin` type, which includes:
 Options allow users to customize the behavior of the plugin. Each option is defined with the following properties:
 
 - **name**: A user-friendly name for the option.
-- **type**: The data type of the option (`'string' | 'boolean' | 'number'`).
+- **type**: The data type of the option (`'string' | 'boolean' | 'number' | 'select'`).
 - **value**: The default value of the option.
+- **options**: The options to show when using the "select" type.
 
 Options are structured using the `PluginOption` type, which is a record where each key corresponds to an option.
 

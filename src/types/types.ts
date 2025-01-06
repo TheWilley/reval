@@ -19,8 +19,9 @@ export type SaveFile = {
 export type PluginOption = {
   [key: string]: {
     name: string;
-    type: 'string' | 'boolean' | 'number';
+    type: 'string' | 'boolean' | 'number' | 'select';
     value: string | boolean | number;
+    options?: string[];
   };
 };
 

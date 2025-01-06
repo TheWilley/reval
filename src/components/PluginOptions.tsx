@@ -42,7 +42,7 @@ function PluginOptions({ options, id, onChange }: OptionsProps) {
                     id={key}
                     className='input'
                     type='text'
-                    value={option.value}
+                    value={option.value as string}
                     onChange={(e) => handleInputChange(key, e.target.value)}
                   />
                 )}
@@ -60,9 +60,23 @@ function PluginOptions({ options, id, onChange }: OptionsProps) {
                     id={key}
                     className='input'
                     type='number'
-                    value={option.value}
+                    value={option.value as number}
                     onChange={(e) => handleInputChange(key, e.target.value)}
                   />
+                )}
+                {option.type === 'select' && (
+                  <select
+                    id={key}
+                    className='select'
+                    value={option.value as string}
+                    onChange={(e) => handleInputChange(key, e.target.value)}
+                  >
+                    {option.options?.map((option, index) => (
+                      <option value={option} key={index}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 )}
               </label>
             </div>

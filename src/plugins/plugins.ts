@@ -14,9 +14,8 @@ export default {
   },
   regexReplace: {
     evaluate: (expression, options) => {
-      if (!options || !options.regex) {
-        throw new Error('Regex option is required');
-      }
+      if (!options) return '';
+
       const regex = new RegExp(
         String(options.regex.value),
         String(options.flags.value) || 'g'
@@ -40,6 +39,29 @@ export default {
         name: 'Regex Flags',
         type: 'string',
         value: '',
+      },
+    },
+  },
+  textModifier: {
+    evaluate: (expression, options) => {
+      if (!options) return '';
+
+      if (options.modifier.value === 'Reverse') {
+        return expression.split('').reverse().join('');
+      } else if (options.modifier.value === 'Uppercase') {
+        return expression.toUpperCase();
+      } else if (options.modifier.value === 'Lowercase') {
+        return expression.toLocaleLowerCase();
+      }
+    },
+    name: 'Text Modifier',
+    placeholderText: 'Write text here...',
+    options: {
+      modifier: {
+        name: 'Modifier',
+        type: 'select',
+        value: '',
+        options: ['Reverse', 'Uppercase', 'Lowercase'],
       },
     },
   },
