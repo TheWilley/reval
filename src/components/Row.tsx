@@ -2,7 +2,7 @@ import TextArea from './TextArea';
 import useEval from '../hooks/useEval';
 import Result from './Result';
 import { useEffect, useState } from 'react';
-import { plugins } from '../plugins/plugins';
+import plugins from '../plugins/plugins';
 import PluginOptions from './PluginOptions';
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {

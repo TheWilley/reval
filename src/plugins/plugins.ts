@@ -1,7 +1,7 @@
 import Sandbox from '@nyariv/sandboxjs';
 import { evaluate as mathEvaluate } from 'mathjs';
 import { Plugins } from '../types/types';
-export const plugins: Plugins = {
+export default {
   eval: {
     evaluate: (expression) => String(new Sandbox().compile(expression)({}).run()),
     name: 'Eval',
@@ -43,4 +43,4 @@ export const plugins: Plugins = {
       },
     },
   },
-};
+} as Plugins;
