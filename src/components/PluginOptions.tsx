@@ -1,4 +1,5 @@
 import { PluginOption } from '../types/types';
+import Dialog from './Dialog';
 
 type OptionsProps = {
   options?: PluginOption;
@@ -19,70 +20,65 @@ function PluginOptions({ options, id, onChange }: OptionsProps) {
 
   return (
     <>
-      <button
-        className='btn-sm mb-2 mt-2 w-full max-w-[8em] rounded-md bg-base-100 px-3 py-1 hover:brightness-[98%]'
-        onClick={() =>
-          (
-            document.getElementById(`options-modal-${id}`) as HTMLDialogElement
-          ).showModal()
+      <Dialog
+        id={`options_modal-${id}`}
+        toggleElement={
+          <button className='btn-sm mb-2 mt-2 w-full max-w-[8em] rounded-md bg-base-100 px-3 py-1 hover:brightness-[98%]'>
+            Options
+          </button>
         }
       >
-        Options
-      </button>
-      <dialog id={`options-modal-${id}`} className='modal'>
-        <div className='modal-box bg-base-300'>
-          {Object.entries(options).map(([key, option]) => (
-            <div key={key} style={{ marginBottom: '1rem' }}>
-              <label htmlFor={key} className='form-control'>
-                <div className='label'>
-                  <span className='label-text'>{option.name}</span>
-                </div>
-                {option.type === 'string' && (
-                  <input
-                    id={key}
-                    className='input'
-                    type='text'
-                    value={option.value as string}
-                    onChange={(e) => handleInputChange(key, e.target.value)}
-                  />
-                )}
-                {option.type === 'boolean' && (
-                  <input
-                    id={key}
-                    className='checkbox'
-                    type='checkbox'
-                    checked={option.value === 'true'}
-                    onChange={(e) => handleInputChange(key, e.target.checked.toString())}
-                  />
-                )}
-                {option.type === 'number' && (
-                  <input
-                    id={key}
-                    className='input'
-                    type='number'
-                    value={option.value as number}
-                    onChange={(e) => handleInputChange(key, e.target.value)}
-                  />
-                )}
-                {option.type === 'select' && (
-                  <select
-                    id={key}
-                    className='select'
-                    value={option.value as string}
-                    onChange={(e) => handleInputChange(key, e.target.value)}
-                  >
-                    {option.options?.map((option, index) => (
-                      <option value={option} key={index}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              </label>
-            </div>
-          ))}
-        </div>
-      </dialog>
+        {Object.entries(options).map(([key, option]) => (
+          <div key={key} style={{ marginBottom: '1rem' }}>
+            <label htmlFor={key} className='form-control'>
+              <div className='label'>
+                <span className='label-text'>{option.name}</span>
+              </div>
+              {option.type === 'string' && (
+                <input
+                  id={key}
+                  className='input'
+                  type='text'
+                  value={option.value as string}
+                  onChange={(e) => handleInputChange(key, e.target.value)}
+                />
+              )}
+              {option.type === 'boolean' && (
+                <input
+                  id={key}
+                  className='checkbox'
+                  type='checkbox'
+                  checked={option.value === 'true'}
+                  onChange={(e) => handleInputChange(key, e.target.checked.toString())}
+                />
+              )}
+              {option.type === 'number' && (
+                <input
+                  id={key}
+                  className='input'
+                  type='number'
+                  value={option.value as number}
+                  onChange={(e) => handleInputChange(key, e.target.value)}
+                />
+              )}
+              {option.type === 'select' && (
+                <select
+                  id={key}
+                  className='select'
+                  value={option.value as string}
+                  onChange={(e) => handleInputChange(key, e.target.value)}
+                >
+                  {option.options?.map((option, index) => (
+                    <option value={option} key={index}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </label>
+          </div>
+        ))}
+      </Dialog>
     </>
   );
 }
