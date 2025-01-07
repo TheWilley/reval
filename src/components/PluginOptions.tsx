@@ -1,13 +1,15 @@
 import { PluginOption } from '../types/types';
 import Dialog from './Dialog';
 
-type OptionsProps = {
+function PluginOptions({
+  options,
+  id,
+  onChange,
+}: {
   options?: PluginOption;
   onChange?: (key: string, value: string) => void;
   id: number;
-};
-
-function PluginOptions({ options, id, onChange }: OptionsProps) {
+}) {
   const handleInputChange = (key: string, value: string) => {
     if (onChange) {
       onChange(key, value);
