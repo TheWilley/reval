@@ -1,7 +1,7 @@
 import TextArea from './TextArea';
 import useEval from '../hooks/useEval';
 import Result from './Result';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import plugins from '../plugins/plugins';
 import PluginOptions from './PluginOptions';
 
@@ -22,11 +22,19 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
   const [opacity, setOpacity] = useState('0%');
   const [rotate, setRotate] = useState('-20px');
   const [maxHeight, setMaxHeight] = useState('999px');
+  const rowRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     setOpacity('100%');
     setRotate('0px');
   }, []);
+
+  useEffect(() => {
+    if (rowRef.current) {
+      const height = rowRef.current.scrollHeight * 2;
+      setMaxHeight(`${height}px`);
+    }
+  }, [expression]);
 
   const remove = () => {
     setOpacity('0%');
@@ -42,6 +50,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
     <li
       className='rounded-lg shadow-lg transition-all duration-300 ease-in-out'
       style={{ opacity, maxHeight, translate: `0px ${rotate}` }}
+      ref={rowRef}
     >
       <div className='grid grid-cols-1 gap-4 p-4 lg:grid-cols-[7%_50%_40%]'>
         <div className='flex items-center justify-center gap-2 lg:block'>
