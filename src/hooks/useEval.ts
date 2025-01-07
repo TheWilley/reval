@@ -9,11 +9,11 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
   const [mode, setMode] = useState<keyof typeof availablePlugins>(() =>
     initializeMode(id, availablePlugins)
   );
-  const placeholder = useMemo(
-    () => availablePlugins[mode].placeholderText,
-    [availablePlugins, mode]
-  );
   const currentPlugin = useMemo(() => availablePlugins[mode], [availablePlugins, mode]);
+  const placeholder = useMemo(
+    () => currentPlugin.placeholderText,
+    [currentPlugin.placeholderText]
+  );
   const [pluginOptions, setPluginOptions] = useState(
     initializePluginOptions(id, currentPlugin.options)
   );
@@ -31,17 +31,13 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
   const evaluate = useCallback(
     (expr: string): EvalResult => {
       try {
-        const plugin = availablePlugins[mode];
-        if (!plugin) {
-          throw new Error(`No plugin available for mode: ${mode}`);
-        }
-        const evaluation = plugin.evaluate(expr, pluginOptions);
+        const evaluation = currentPlugin.evaluate(expr, pluginOptions);
         return { state: 'success', value: String(evaluation) };
       } catch (error) {
         return { state: 'error', value: String((error as Error).message) };
       }
     },
-    [availablePlugins, mode, pluginOptions]
+    [currentPlugin, pluginOptions]
   );
 
   useEffect(() => {
