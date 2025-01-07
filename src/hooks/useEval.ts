@@ -96,9 +96,18 @@ const defaultResult: EvalResult = {
   value: 'please write an expression',
 };
 
-function initializeExpression(id: number): Expression['expression'] {
+function findItem(id: number) {
   const savedExpressions = getSavedExpressions();
   const foundItem = savedExpressions.find((item) => Number(item.id) === id);
+  return foundItem;
+}
+
+function getSavedExpressions(): Expression[] {
+  return JSON.parse(localStorage.getItem(localStorageExpressionsArray) || '[]');
+}
+
+function initializeExpression(id: number): string {
+  const foundItem = findItem(id);
   return foundItem ? foundItem.expression : '';
 }
 
@@ -106,24 +115,18 @@ function initializeMode(
   id: number,
   availablePlugins: Record<string, Plugin>
 ): keyof typeof availablePlugins {
-  const savedExpressions = getSavedExpressions();
-  const foundItem = savedExpressions.find((item) => Number(item.id) === id);
+  const foundItem = findItem(id);
   return foundItem && availablePlugins[foundItem.mode] ? foundItem.mode : 'eval';
 }
 
 function initializePluginOptions(id: number, pluginOptions: PluginOption | undefined) {
-  const savedExpressions = getSavedExpressions();
-  const foundItem = savedExpressions.find((item) => Number(item.id) === id);
+  const foundItem = findItem(id);
   return foundItem?.pluginOptions ? foundItem.pluginOptions : pluginOptions;
-}
-
-function getSavedExpressions(): Expression[] {
-  return JSON.parse(localStorage.getItem(localStorageExpressionsArray) || '[]');
 }
 
 function updateLocalStorage(
   id: number,
-  expression: Expression['expression'],
+  expression: string,
   mode: string,
   pluginOptions: PluginOption | undefined
 ) {
