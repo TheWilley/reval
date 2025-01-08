@@ -28,6 +28,7 @@ Options allow users to customize the behavior of the plugin. Each option is defi
 - **name**: A user-friendly name for the option.
 - **type**: The data type of the option (`'string' | 'boolean' | 'number' | 'select'`).
 - **value**: The default value of the option.
+- **placeholder**: The placeholder to display (only works for string and number inputs)
 - **options**: The options to show when using the "select" type.
 
 Options are structured using the `PluginOption` type, which is a record where each key corresponds to an option.

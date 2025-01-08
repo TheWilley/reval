@@ -42,6 +42,7 @@ function PluginOptions({
                   className='input'
                   type='text'
                   value={option.value as string}
+                  placeholder={option.placeholder}
                   onChange={(e) => handleInputChange(key, e.target.value)}
                 />
               )}
@@ -60,6 +61,7 @@ function PluginOptions({
                   className='input'
                   type='number'
                   value={option.value as number}
+                  placeholder={option.placeholder}
                   onChange={(e) => handleInputChange(key, e.target.value)}
                 />
               )}
