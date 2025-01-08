@@ -49,7 +49,7 @@ function PluginOptions({
               {option.type === 'boolean' && (
                 <input
                   id={key}
-                  className='checkbox'
+                  className='checkbox h-12 w-full'
                   type='checkbox'
                   checked={option.value === 'true'}
                   onChange={(e) => handleInputChange(key, e.target.checked.toString())}
