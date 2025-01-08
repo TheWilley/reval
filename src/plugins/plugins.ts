@@ -60,7 +60,7 @@ export default {
       modifier: {
         name: 'Modifier',
         type: 'select',
-        value: '',
+        value: 'Reverse',
         options: ['Reverse', 'Uppercase', 'Lowercase'],
       },
     },
