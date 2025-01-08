@@ -21,7 +21,7 @@ export type PluginOption = {
     name: string;
     type: 'string' | 'boolean' | 'number' | 'select';
     value: string | boolean | number;
-    placeholder?: string;
+    placeholderText?: string;
     options?: string[];
   };
 };
