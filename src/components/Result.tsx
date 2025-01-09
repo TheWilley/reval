@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { EvalResult } from '../types/types';
+import DOMPurify from 'dompurify';
 
 // Helper function to determine the color based on result state
 const getColorFromState = (state: EvalResult['state']) => {
@@ -25,7 +26,10 @@ function Result({ value, state }: { value: string; state: EvalResult['state'] })
         style={{ maxHeight: isExpanded ? 'none' : '10rem' }}
         data-testid='result'
       >
-        <div className='flex justify-center'>{truncatedValue}</div>
+        <div
+          className='flex justify-center'
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(truncatedValue) }}
+        ></div>
       </div>
       {value.length > 200 && (
         <button
