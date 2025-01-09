@@ -1,6 +1,7 @@
 import Sandbox from '@nyariv/sandboxjs';
 import { evaluate as mathEvaluate } from 'mathjs';
 import { Plugins } from '../types/types';
+
 export default {
   eval: {
     evaluate: (expression) => String(new Sandbox().compile(expression)({}).run()),
@@ -67,5 +68,62 @@ export default {
         options: ['Reverse', 'Uppercase', 'Lowercase'],
       },
     },
+  },
+  wordCounter: {
+    evaluate: (expression) => {
+      const wordCount = expression.trim().split(/\s+/).length;
+      return `Word Count: ${wordCount}`;
+    },
+    name: 'Word Counter',
+    placeholderText: 'Write text here...',
+  },
+  caesarCipher: {
+    evaluate: (expression, options) => {
+      if (!options) return '';
+      const shift = parseInt(String(options.shift.value), 10) || 0;
+      return expression
+        .split('')
+        .map((char) => {
+          if (char.match(/[a-z]/i)) {
+            const charCode = char.charCodeAt(0);
+            const base = charCode >= 65 && charCode <= 90 ? 65 : 97;
+            return String.fromCharCode(((charCode - base + shift) % 26) + base);
+          }
+          return char;
+        })
+        .join('');
+    },
+    name: 'Caesar Cipher',
+    placeholderText: 'Enter text to encode...',
+    options: {
+      shift: {
+        name: 'Shift',
+        type: 'number',
+        value: 1,
+        placeholderText: 'Enter shift value...',
+      },
+    },
+  },
+  base64Encoder: {
+    evaluate: (expression) => {
+      try {
+        return btoa(expression);
+      } catch (err) {
+        return 'Invalid input for Base64 encoding';
+      }
+    },
+    name: 'Base64 Encoder',
+    placeholderText: 'Enter text to encode in Base64...',
+  },
+  base64Decoder: {
+    evaluate: (expression) => {
+      try {
+        return atob(expression);
+      } catch (err) {
+        return 'Invalid Base64 string';
+      }
+    },
+    name: 'Base64 Decoder',
+    placeholderText: 'Enter Base64 string to decode...',
   },
 } as Plugins;
