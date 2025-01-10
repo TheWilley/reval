@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import useTextAreaAutoHeight from '../hooks/useTextAreaAutoHeight';
 
 function TextArea({
   expression,
@@ -9,19 +10,17 @@ function TextArea({
   placeholder: string | undefined;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }) {
+  const [textareaRef] = useTextAreaAutoHeight();
+
   return (
-    <div
-      className='grow-wrap textarea grid w-full p-0 outline-none'
-      data-replicated-value={expression}
-    >
-      <textarea
-        value={expression}
-        onChange={onChange}
-        className='textarea resize-none overflow-hidden font-mono'
-        placeholder={placeholder || 'Write an expression here...'}
-        data-testid='expression'
-      />
-    </div>
+    <textarea
+      value={expression}
+      onChange={onChange}
+      ref={textareaRef}
+      className='textarea h-full resize-none overflow-hidden font-mono'
+      placeholder={placeholder || 'Write an expression here...'}
+      data-testid='expression'
+    />
   );
 }
 

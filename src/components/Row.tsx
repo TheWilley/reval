@@ -82,7 +82,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
             />
           )}
         </div>
-        <div className='mt-2 flex justify-center'>
+        <div className='mt-2 grid'>
           <TextArea
             expression={expression}
             placeholder={placeholder}
