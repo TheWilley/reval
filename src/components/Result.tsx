@@ -27,9 +27,9 @@ function Result({ value, state }: { value: string; state: EvalResult['state'] })
         data-testid='result'
       >
         <div
-          className='flex justify-center'
+          className='text-center'
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(truncatedValue) }}
-        ></div>
+        />
       </div>
       {value.length > 200 && (
         <button
