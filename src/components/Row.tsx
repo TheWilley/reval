@@ -48,7 +48,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
       }));
     }, parseFloat(styles.transitionDuration));
     calculateHeight();
-  }, []);
+  }, [styles.transitionDuration]);
 
   useEffect(() => {
     calculateHeight();
