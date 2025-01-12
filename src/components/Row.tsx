@@ -48,7 +48,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
 
   return (
     <li
-      className='rounded-lg shadow-lg transition-all duration-300 ease-in-out'
+      className='h-full rounded-lg shadow-lg transition-all duration-300 ease-in-out'
       style={{ opacity, maxHeight, translate: `0px ${rotate}` }}
       ref={rowRef}
     >
