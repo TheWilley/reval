@@ -1,7 +1,7 @@
 import TextArea from './TextArea';
 import useEval from '../hooks/useEval';
 import Result from './Result';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import plugins from '../plugins/plugins';
 import PluginOptions from './PluginOptions';
 
@@ -24,39 +24,15 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
     opacity: '0%',
     translateY: '-20px',
     maxHeight: '0px',
-    transitionDuration: `${0.3}s`,
   });
-
-  const rowRef = useRef<HTMLLIElement>(null);
-  const calculateHeight = () => {
-    if (rowRef.current) {
-      const height = rowRef.current.scrollHeight;
-      setStyles((prevStyles) => ({
-        ...prevStyles,
-        maxHeight: `${height}px`,
-      }));
-    }
-  };
 
   useEffect(() => {
     setStyles((prevStyles) => ({
       ...prevStyles,
       opacity: '100%',
       translateY: '0px',
-      transitionDuration: '0.3s',
+      maxHeight: '999px',
     }));
-    calculateHeight();
-  }, [styles.transitionDuration]);
-
-  useEffect(() => {
-    calculateHeight();
-  }, [html, result.value]);
-
-  useEffect(() => {
-    const handleResize = () => calculateHeight();
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const remove = () => {
@@ -64,7 +40,6 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
       opacity: '0%',
       translateY: '-20px',
       maxHeight: '0px',
-      transitionDuration: '0.3s',
     });
     setTimeout(() => {
       removeElement(id);
@@ -74,14 +49,12 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
 
   return (
     <li
-      className='h-full overflow-hidden rounded-lg shadow-lg transition-all ease-in-out'
+      className='h-full overflow-hidden rounded-lg shadow-lg transition-all duration-300 ease-in-out'
       style={{
         opacity: styles.opacity,
         maxHeight: styles.maxHeight,
         transform: `translateY(${styles.translateY})`,
-        transitionDuration: styles.transitionDuration,
       }}
-      ref={rowRef}
     >
       <div className='grid grid-cols-1 gap-4 p-4 lg:grid-cols-[7%_50%_40%]'>
         <div className='flex items-center justify-center gap-2 lg:block'>

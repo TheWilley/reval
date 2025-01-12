@@ -13,7 +13,7 @@ function TextArea({
     <ContentEditable
       html={html}
       onChange={onChange}
-      className='textarea h-full resize-none overflow-hidden font-mono'
+      className='textarea h-[98%] max-h-[980px] resize-none overflow-auto font-mono'
       placeholder={placeholder || 'Write an expression here...'}
       data-testid='expression'
       role='textbox'
