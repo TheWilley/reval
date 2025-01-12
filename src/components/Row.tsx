@@ -7,7 +7,7 @@ import PluginOptions from './PluginOptions';
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
   const {
-    expression,
+    html,
     result,
     mode,
     pluginList,
@@ -34,7 +34,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
       const height = rowRef.current.scrollHeight * 2;
       setMaxHeight(`${height}px`);
     }
-  }, [expression]);
+  }, [html]);
 
   const remove = () => {
     setOpacity('0%');
@@ -83,11 +83,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
           )}
         </div>
         <div className='mt-2 grid'>
-          <TextArea
-            expression={expression}
-            placeholder={placeholder}
-            onChange={OnChangeExpression}
-          />
+          <TextArea html={html} placeholder={placeholder} onChange={OnChangeExpression} />
         </div>
         <div className='flex items-center justify-center'>
           <Result state={result.state} value={result.value} />

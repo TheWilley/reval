@@ -7,3 +7,11 @@
   margin: 0 auto;
   text-align: center;
 }
+
+/* https://github.com/lovasoa/react-contenteditable/pull/64#issuecomment-373906517 */
+[contenteditable='true']:empty:before {
+  content: attr(placeholder);
+  display: block;
+  color: #aaa;
+  cursor: text;
+}

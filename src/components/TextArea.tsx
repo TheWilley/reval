@@ -1,25 +1,22 @@
-import { ChangeEvent } from 'react';
-import useTextAreaAutoHeight from '../hooks/useTextAreaAutoHeight';
+import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 
 function TextArea({
-  expression,
+  html,
   placeholder,
   onChange,
 }: {
-  expression: string | undefined;
-  placeholder: string | undefined;
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  html: string;
+  placeholder?: string;
+  onChange: (e: ContentEditableEvent) => void;
 }) {
-  const [textareaRef] = useTextAreaAutoHeight();
-
   return (
-    <textarea
-      value={expression}
+    <ContentEditable
+      html={html}
       onChange={onChange}
-      ref={textareaRef}
       className='textarea h-full resize-none overflow-hidden font-mono'
       placeholder={placeholder || 'Write an expression here...'}
       data-testid='expression'
+      role='textbox'
     />
   );
 }

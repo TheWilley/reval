@@ -1,10 +1,13 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { EvalResult, Expression, Plugin, PluginOption } from '../types/types';
 import { localStorageExpressionsArray } from '../utils/localStorageKeys';
 import usePrevious from './usePrevious';
+import { ContentEditableEvent } from 'react-contenteditable';
+import DOMPurify from 'dompurify';
 
 export default function useEval(id: number, availablePlugins: Record<string, Plugin>) {
-  const [expression, setExpression] = useState<string>(() => initializeExpression(id));
+  const [html, setHtml] = useState<string>(() => initializeExpression(id));
+  const [expression, setExpression] = useState('');
   const [result, setResult] = useState<EvalResult>(defaultResult);
   const [mode, setMode] = useState<keyof typeof availablePlugins>(() =>
     initializeMode(id, availablePlugins)
@@ -45,8 +48,9 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
   }, [evaluate, expression]);
 
   useEffect(() => {
-    updateLocalStorage(id, expression, mode, pluginOptions);
-  }, [expression, mode, id, pluginOptions]);
+    updateLocalStorage(id, html, mode, pluginOptions);
+    setExpression(extractContent(html));
+  }, [html, mode, id, pluginOptions]);
 
   useEffect(() => {
     if (
@@ -56,8 +60,19 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
       setPluginOptions(currentPlugin.options);
   }, [currentPlugin.name, currentPlugin.options, previousPluginName]);
 
-  const OnChangeExpression = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setExpression(e.target.value);
+  const OnChangeExpression = (e: ContentEditableEvent) => {
+    // Clean attributes as we don't want to paste or type html with styles or scripts
+    const value: string = DOMPurify.sanitize(e.target.value, {
+      ALLOWED_ATTR: [''],
+    });
+
+    // Weird bug where a <br> tag will be added if content is set to empty, thus we need to remove it
+    // as placeholder otherwise won't show up
+    if (value === '<br>') {
+      setHtml('');
+    } else {
+      setHtml(value);
+    }
   };
 
   const onChangePluginOptions = (key: string, value: string | boolean | number) => {
@@ -68,12 +83,12 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
   };
 
   const clearExpression = () => {
-    setExpression('');
+    setHtml('');
     removeLocalStorageExpression(id);
   };
 
   return {
-    expression,
+    html,
     result,
     mode,
     placeholder,
@@ -91,6 +106,12 @@ const defaultResult: EvalResult = {
   state: 'neutral',
   value: 'please write an expression',
 };
+
+function extractContent(html: string) {
+  return (
+    new DOMParser().parseFromString(html, 'text/html').documentElement.textContent || ''
+  );
+}
 
 function findItem(id: number) {
   const savedExpressions = getSavedExpressions();
