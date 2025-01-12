@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest run",
+    "test:ui": "vitest --ui",
     "pretest": "npm run lint",
     "test:watch": "vitest",
     "build": "tsc && vite build",
@@ -39,6 +40,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "@vitest/ui": "^2.1.8",
     "autoprefixer": "^10.4.15",
     "daisyui": "^4.12.14",
     "eslint": "^8.45.0",
