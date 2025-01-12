@@ -19,27 +19,55 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
     onChangePluginOptions,
     setMode,
   } = useEval(id, plugins);
-  const [opacity, setOpacity] = useState('0%');
-  const [rotate, setRotate] = useState('-20px');
-  const [maxHeight, setMaxHeight] = useState('999px');
+
+  const [styles, setStyles] = useState({
+    opacity: '0%',
+    translateY: '-20px',
+    maxHeight: '0px',
+    transitionDuration: `${0.3}s`,
+  });
+
   const rowRef = useRef<HTMLLIElement>(null);
+  const calculateHeight = () => {
+    if (rowRef.current) {
+      const height = rowRef.current.scrollHeight;
+      setStyles((prevStyles) => ({
+        ...prevStyles,
+        maxHeight: `${height}px`,
+      }));
+    }
+  };
 
   useEffect(() => {
-    setOpacity('100%');
-    setRotate('0px');
+    setTimeout(() => {
+      setStyles((prevStyles) => ({
+        ...prevStyles,
+        opacity: '100%',
+        translateY: '0px',
+        transitionDuration: '0.3s',
+      }));
+    }, parseFloat(styles.transitionDuration));
+    calculateHeight();
   }, []);
 
   useEffect(() => {
-    if (rowRef.current) {
-      const height = rowRef.current.scrollHeight * 2;
-      setMaxHeight(`${height}px`);
-    }
-  }, [html]);
+    calculateHeight();
+  }, [html, result.value]);
+
+  useEffect(() => {
+    const handleResize = () => calculateHeight();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const remove = () => {
-    setOpacity('0%');
-    setRotate('-20px');
-    setMaxHeight('0px');
+    setStyles({
+      opacity: '0%',
+      translateY: '-20px',
+      maxHeight: '0px',
+      transitionDuration: '0.3s',
+    });
     setTimeout(() => {
       removeElement(id);
       clearExpression();
@@ -48,8 +76,13 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
 
   return (
     <li
-      className='h-full rounded-lg shadow-lg transition-all duration-300 ease-in-out'
-      style={{ opacity, maxHeight, translate: `0px ${rotate}` }}
+      className='h-full overflow-hidden rounded-lg shadow-lg transition-all ease-in-out'
+      style={{
+        opacity: styles.opacity,
+        maxHeight: styles.maxHeight,
+        transform: `translateY(${styles.translateY})`,
+        transitionDuration: styles.transitionDuration,
+      }}
       ref={rowRef}
     >
       <div className='grid grid-cols-1 gap-4 p-4 lg:grid-cols-[7%_50%_40%]'>
@@ -68,8 +101,8 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
             data-testid='mode'
           >
             <option disabled>Mode</option>
-            {pluginList.map((plugin, index) => (
-              <option value={plugin.key} defaultChecked={index === 0} key={plugin.key}>
+            {pluginList.map((plugin) => (
+              <option value={plugin.key} key={plugin.key}>
                 {plugin.name}
               </option>
             ))}
