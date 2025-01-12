@@ -39,14 +39,12 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setStyles((prevStyles) => ({
-        ...prevStyles,
-        opacity: '100%',
-        translateY: '0px',
-        transitionDuration: '0.3s',
-      }));
-    }, parseFloat(styles.transitionDuration));
+    setStyles((prevStyles) => ({
+      ...prevStyles,
+      opacity: '100%',
+      translateY: '0px',
+      transitionDuration: '0.3s',
+    }));
     calculateHeight();
   }, [styles.transitionDuration]);
 
