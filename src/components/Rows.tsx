@@ -1,3 +1,4 @@
+import { animated, useSpring } from '@react-spring/web';
 import Row from './Row';
 
 function Rows({
@@ -9,8 +10,20 @@ function Rows({
   addElement: () => void;
   removeElement: (id: number) => void;
 }) {
+  const styles = useSpring({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+    config: {
+      duration: 500,
+    },
+  });
+
   return (
-    <>
+    <animated.div style={styles}>
       <div
         className={'overflow-x-hidden rounded-md bg-base-200 text-left transition-all'}
       >
@@ -26,7 +39,7 @@ function Rows({
       >
         Alt + Enter or click here to add row
       </div>
-    </>
+    </animated.div>
   );
 }
 

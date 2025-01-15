@@ -1,9 +1,11 @@
 import TextArea from './TextArea';
 import useEval from '../hooks/useEval';
 import Result from './Result';
-import { useEffect, useState } from 'react';
 import plugins from '../plugins/plugins';
 import PluginOptions from './PluginOptions';
+import { animated, useSpring } from '@react-spring/web';
+import { easings } from '@react-spring/web';
+import { useState } from 'react';
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
   const {
@@ -20,41 +22,37 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
     setMode,
   } = useEval(id, plugins);
 
-  const [styles, setStyles] = useState({
-    opacity: '0%',
-    translateY: '-20px',
-    maxHeight: '0px',
+  const [isRemoving, setIsRemoving] = useState(false);
+
+  const styles = useSpring({
+    from: {
+      opacity: '0%',
+      transform: 'translate(0px, -20px)',
+      maxHeight: '0px',
+    },
+    to: {
+      opacity: isRemoving ? '0%' : '100%',
+      transform: isRemoving ? 'translate(0px, -20px)' : 'translate(0px, 0px)',
+      maxHeight: isRemoving ? '0px' : '999px',
+    },
+    config: {
+      duration: 100,
+      easing: easings.linear,
+    },
   });
 
-  useEffect(() => {
-    setStyles((prevStyles) => ({
-      ...prevStyles,
-      opacity: '100%',
-      translateY: '0px',
-      maxHeight: '999px',
-    }));
-  }, []);
-
   const remove = () => {
-    setStyles({
-      opacity: '0%',
-      translateY: '-20px',
-      maxHeight: '0px',
-    });
+    setIsRemoving(true);
     setTimeout(() => {
       removeElement(id);
       clearExpression();
-    }, 300);
+    }, 500);
   };
 
   return (
-    <li
+    <animated.li
       className='h-full overflow-hidden rounded-lg shadow-lg transition-all duration-300 ease-in-out'
-      style={{
-        opacity: styles.opacity,
-        maxHeight: styles.maxHeight,
-        transform: `translateY(${styles.translateY})`,
-      }}
+      style={styles}
     >
       <div className='grid grid-cols-1 gap-4 p-4 lg:grid-cols-[7%_50%_40%]'>
         <div className='flex items-center justify-center gap-2 lg:block'>
@@ -93,7 +91,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
           <Result state={result.state} value={result.value} />
         </div>
       </div>
-    </li>
+    </animated.li>
   );
 }
 
