@@ -1,3 +1,4 @@
+import addVariablesToTailwindClass from '../helpers/addVariablesToString';
 import { EvalResult } from '../types/types';
 
 // Helper function to determine the color based on result state
@@ -15,7 +16,10 @@ function Result({ value, state }: { value: string; state: EvalResult['state'] })
   return (
     <div className='h-full w-full gap-2'>
       <div
-        className={`mt-2 overflow-hidden whitespace-pre-wrap break-words rounded-lg border-2 border-base-100 p-6 ${getColorFromState(state)}`}
+        className={addVariablesToTailwindClass(
+          'mt-2 overflow-hidden whitespace-pre-wrap break-words rounded-lg border-2 border-base-100 p-6',
+          getColorFromState(state)
+        )}
         data-testid='result'
       >
         <div className='text-center'>{value}</div>

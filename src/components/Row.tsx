@@ -6,6 +6,7 @@ import PluginOptions from './PluginOptions';
 import { animated, useSpring } from '@react-spring/web';
 import { easings } from '@react-spring/web';
 import { useState } from 'react';
+import addVariablesToTailwindClass from '../helpers/addVariablesToString';
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
   const {
@@ -54,7 +55,10 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
       style={styles}
     >
       <div
-        className={`grid grid-cols-1 gap-4 p-4 ${currentPlugin.hideResult ? 'lg:grid-cols-[7%_91%]' : 'lg:grid-cols-[7%_50%_40%]'}`}
+        className={addVariablesToTailwindClass(
+          'grid grid-cols-1 gap-4 p-4',
+          currentPlugin.hideResult ? 'lg:grid-cols-[7%_91%]' : 'lg:grid-cols-[7%_50%_40%]'
+        )}
       >
         <div className='flex items-center justify-center gap-2 lg:block'>
           <button
