@@ -30,8 +30,11 @@ export type Plugin = {
   evaluate: (expression: string, options?: PluginOption) => string;
   name: string;
   placeholderText?: string;
-  hideResult?: boolean;
   options?: PluginOption;
+  configuration?: {
+    disableExpressionTextWrapping?: boolean;
+    hideResult?: boolean;
+  };
 };
 
 export type Plugins = Record<string, Plugin>;

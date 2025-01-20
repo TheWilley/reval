@@ -12,7 +12,10 @@ export default {
     evaluate: (expression) => expression,
     name: 'Note',
     placeholderText: 'Write note here...',
-    hideResult: true,
+    configuration: {
+      hideResult: true,
+      disableExpressionTextWrapping: true,
+    },
   },
   math: {
     evaluate: (expression) => mathEvaluate(expression),

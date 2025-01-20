@@ -57,7 +57,9 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
       <div
         className={addVariablesToTailwindClass(
           'grid grid-cols-1 gap-4 p-4',
-          currentPlugin.hideResult ? 'lg:grid-cols-[7%_91%]' : 'lg:grid-cols-[7%_50%_40%]'
+          currentPlugin.configuration?.hideResult
+            ? 'lg:grid-cols-[7%_91%]'
+            : 'lg:grid-cols-[7%_50%_40%]'
         )}
       >
         <div className='flex items-center justify-center gap-2 lg:block'>
@@ -93,10 +95,13 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
           <TextArea
             expression={expression}
             placeholder={currentPlugin.placeholderText}
+            disableExpressionTextWrapping={
+              currentPlugin.configuration?.disableExpressionTextWrapping
+            }
             onChange={OnChangeExpression}
           />
         </div>
-        {currentPlugin.hideResult ? (
+        {currentPlugin.configuration?.hideResult ? (
           ''
         ) : (
           <div className='flex items-center justify-center'>
