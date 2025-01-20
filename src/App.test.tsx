@@ -123,7 +123,8 @@ test('it adds a new row and changes to math mode', () => {
 
   expect((selectElemetOptions[0] as HTMLOptionElement).selected).toBeFalsy();
   expect((selectElemetOptions[1] as HTMLOptionElement).selected).toBeFalsy();
-  expect((selectElemetOptions[2] as HTMLOptionElement).selected).toBeTruthy();
+  expect((selectElemetOptions[2] as HTMLOptionElement).selected).toBeFalsy();
+  expect((selectElemetOptions[3] as HTMLOptionElement).selected).toBeTruthy();
 });
 
 test('it changes placeholder', () => {
