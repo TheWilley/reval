@@ -1,19 +1,21 @@
-import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
+import { ChangeEvent } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 function TextArea({
-  html,
+  expression,
   placeholder,
   onChange,
 }: {
-  html: string;
+  expression: string;
   placeholder?: string;
-  onChange: (e: ContentEditableEvent) => void;
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }) {
   return (
-    <ContentEditable
-      html={html}
+    <TextareaAutosize
+      value={expression}
       onChange={onChange}
-      className='textarea h-[98%] max-h-[980px] resize-none overflow-auto font-mono'
+      maxRows={30}
+      className='textarea max-h-[980px] min-h-full resize-none font-mono'
       placeholder={placeholder || 'Write an expression here...'}
       data-testid='expression'
       role='textbox'

@@ -10,7 +10,7 @@ import addVariablesToTailwindClass from '../helpers/addVariablesToTailwindClass'
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
   const {
-    html,
+    expression,
     result,
     mode,
     pluginList,
@@ -91,7 +91,7 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
         </div>
         <div className='mt-2 grid'>
           <TextArea
-            html={html}
+            expression={expression}
             placeholder={currentPlugin.placeholderText}
             onChange={OnChangeExpression}
           />
