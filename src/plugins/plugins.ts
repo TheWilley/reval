@@ -8,6 +8,12 @@ export default {
     name: 'Eval',
     placeholderText: 'Write a javascript expression here...',
   },
+  note: {
+    evaluate: (expression) => expression,
+    name: 'Note',
+    placeholderText: 'Write note here...',
+    hideResult: true,
+  },
   math: {
     evaluate: (expression) => mathEvaluate(expression),
     name: 'Math',

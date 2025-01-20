@@ -53,7 +53,9 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
       className='h-full overflow-hidden rounded-lg shadow-lg transition-all duration-300 ease-in-out'
       style={styles}
     >
-      <div className='grid grid-cols-1 gap-4 p-4 lg:grid-cols-[7%_50%_40%]'>
+      <div
+        className={`grid grid-cols-1 gap-4 p-4 ${currentPlugin.hideResult ? 'lg:grid-cols-[7%_91%]' : 'lg:grid-cols-[7%_50%_40%]'}`}
+      >
         <div className='flex items-center justify-center gap-2 lg:block'>
           <button
             className='btn btn-warning btn-sm mb-2 mt-2 w-full max-w-[8em] rounded-md px-3 py-1'
@@ -90,9 +92,13 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
             onChange={OnChangeExpression}
           />
         </div>
-        <div className='flex items-center justify-center'>
-          <Result state={result.state} value={result.value} />
-        </div>
+        {currentPlugin.hideResult ? (
+          ''
+        ) : (
+          <div className='flex items-center justify-center'>
+            <Result state={result.state} value={result.value} />
+          </div>
+        )}
       </div>
     </animated.li>
   );
