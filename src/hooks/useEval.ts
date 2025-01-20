@@ -13,10 +13,6 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
     initializeMode(id, availablePlugins)
   );
   const currentPlugin = useMemo(() => availablePlugins[mode], [availablePlugins, mode]);
-  const placeholder = useMemo(
-    () => currentPlugin.placeholderText,
-    [currentPlugin.placeholderText]
-  );
   const [pluginOptions, setPluginOptions] = useState(
     initializePluginOptions(id, currentPlugin.options)
   );
@@ -91,7 +87,6 @@ export default function useEval(id: number, availablePlugins: Record<string, Plu
     html,
     result,
     mode,
-    placeholder,
     pluginList,
     currentPlugin,
     pluginOptions,

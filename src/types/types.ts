@@ -30,6 +30,7 @@ export type Plugin = {
   evaluate: (expression: string, options?: PluginOption) => string;
   name: string;
   placeholderText?: string;
+  displayResult?: boolean;
   options?: PluginOption;
 };
 

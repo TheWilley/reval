@@ -13,7 +13,6 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
     result,
     mode,
     pluginList,
-    placeholder,
     currentPlugin,
     pluginOptions,
     OnChangeExpression,
@@ -85,7 +84,11 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
           )}
         </div>
         <div className='mt-2 grid'>
-          <TextArea html={html} placeholder={placeholder} onChange={OnChangeExpression} />
+          <TextArea
+            html={html}
+            placeholder={currentPlugin.placeholderText}
+            onChange={OnChangeExpression}
+          />
         </div>
         <div className='flex items-center justify-center'>
           <Result state={result.state} value={result.value} />
