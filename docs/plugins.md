@@ -19,6 +19,7 @@ A plugin is an object that adheres to the `Plugin` type, which includes:
 - **evaluate**: A function that processes an input expression based on provided options.
 - **name**: A descriptive name for the plugin.
 - **placeholderText** _(optional)_: Placeholder text.
+- **hideResult** _(optional)_: Hides the result, effectively only displaying the expression textbox
 - **options** _(optional)_: Configuration options that the plugin can accept.
 
 ## Defining Plugin Options
@@ -54,9 +55,8 @@ Let's walk through creating a **Regex Replace** plugin that performs a regex-bas
 ```javascript
 const regexReplace = {
   evaluate: (expression, options) => {
-    if (!options || !options.regex) {
-      throw new Error('Regex option is required');
-    }
+    if (!options) return '';
+
     const regex = new RegExp(
       String(options.regex.value),
       String(options.flags.value) || 'g'
@@ -70,16 +70,19 @@ const regexReplace = {
       name: 'Regex',
       type: 'string',
       value: '',
+      placeholderText: 'Type a regex pattern',
     },
     replacement: {
       name: 'Replacement',
       type: 'string',
       value: '',
+      placeholderText: 'Type the text to replace the regex pattern',
     },
     flags: {
       name: 'Regex Flags',
       type: 'string',
       value: '',
+      placeholderText: 'Type a regex flag here',
     },
   },
 };
