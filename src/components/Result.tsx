@@ -1,5 +1,4 @@
 import { EvalResult } from '../types/types';
-import DOMPurify from 'dompurify';
 
 // Helper function to determine the color based on result state
 const getColorFromState = (state: EvalResult['state']) => {
@@ -19,10 +18,7 @@ function Result({ value, state }: { value: string; state: EvalResult['state'] })
         className={`mt-2 overflow-hidden whitespace-pre-wrap break-words rounded-lg border-2 border-base-100 p-6 ${getColorFromState(state)}`}
         data-testid='result'
       >
-        <div
-          className='text-center'
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value) }}
-        />
+        <div className='text-center'>{value}</div>
       </div>
     </div>
   );
