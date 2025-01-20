@@ -6,7 +6,7 @@ import PluginOptions from './PluginOptions';
 import { animated, useSpring } from '@react-spring/web';
 import { easings } from '@react-spring/web';
 import { useState } from 'react';
-import addVariablesToTailwindClass from '../helpers/addVariablesToString';
+import addVariablesToTailwindClass from '../helpers/addVariablesToTailwindClass';
 
 function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
   const {

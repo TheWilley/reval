@@ -1,4 +1,4 @@
-import addVariablesToTailwindClass from '../helpers/addVariablesToString';
+import addVariablesToTailwindClass from '../helpers/addVariablesToTailwindClass';
 import { EvalResult } from '../types/types';
 
 // Helper function to determine the color based on result state
