@@ -70,7 +70,7 @@ function Row({
         className={addVariablesToTailwindClass(
           'grid grid-cols-1 gap-4 p-4',
           currentPlugin.configuration?.hideResult
-            ? 'lg:grid-cols-[7%_91%]'
+            ? 'lg:grid-cols-[2%_7%_88%]'
             : 'lg:grid-cols-[2%_7%_47%_40%]'
         )}
       >
