@@ -74,7 +74,7 @@ function Row({
             : 'lg:grid-cols-[2%_7%_47%_40%]'
         )}
       >
-        <div>
+        <div className='hidden lg:block'>
           <button
             className='btn btn-sm mb-1 mt-1 w-full max-w-[8em] rounded-md px-3 py-1 opacity-60 shadow-none'
             onClick={() => moveElementUp(id)}
@@ -91,6 +91,12 @@ function Row({
           </button>
         </div>
         <div className='flex items-center justify-center gap-2 lg:block'>
+          <button
+            className='btn btn-sm mb-1 mt-1 w-full max-w-[8em] rounded-md px-3 py-1 opacity-60 shadow-none lg:hidden'
+            onClick={() => moveElementUp(id)}
+          >
+            <FontAwesomeIcon icon={faArrowUp} />
+          </button>
           <button
             className='btn btn-warning btn-sm mb-2 mt-2 w-full max-w-[8em] rounded-md px-3 py-1'
             onClick={remove}
@@ -118,6 +124,12 @@ function Row({
               onChange={onChangePluginOptions}
             />
           )}
+          <button
+            className='btn btn-sm mb-1 mt-1 w-full max-w-[8em] rounded-md px-3 py-1 opacity-60 shadow-none lg:hidden'
+            onClick={() => moveElementDown(id)}
+          >
+            <FontAwesomeIcon icon={faArrowDown} />
+          </button>
         </div>
         <div className='mt-2 grid'>
           <TextArea
