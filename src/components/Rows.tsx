@@ -5,10 +5,14 @@ function Rows({
   ids,
   addElement,
   removeElement,
+  moveElementUp,
+  moveElementDown,
 }: {
   ids: number[];
   addElement: () => void;
   removeElement: (id: number) => void;
+  moveElementUp: (id: number) => void;
+  moveElementDown: (id: number) => void;
 }) {
   const styles = useSpring({
     from: {
@@ -29,7 +33,13 @@ function Rows({
       >
         <ul>
           {ids.map((id) => (
-            <Row key={id} id={id} removeElement={removeElement} />
+            <Row
+              key={id}
+              id={id}
+              removeElement={removeElement}
+              moveElementUp={moveElementUp}
+              moveElementDown={moveElementDown}
+            />
           ))}
         </ul>
       </div>

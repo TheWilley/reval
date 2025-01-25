@@ -41,5 +41,25 @@ export default function useIds() {
     });
   };
 
-  return [ids, addElement, removeElement] as const;
+  const moveElementUp = (id: number) => {
+    setIds((prev) => {
+      const index = prev.indexOf(id);
+      if (index === 0) return prev;
+      const next = [...prev];
+      [next[index - 1], next[index]] = [next[index], next[index - 1]];
+      return next;
+    });
+  };
+
+  const moveElementDown = (id: number) => {
+    setIds((prev) => {
+      const index = prev.indexOf(id);
+      if (index === prev.length - 1) return prev;
+      const next = [...prev];
+      [next[index], next[index + 1]] = [next[index + 1], next[index]];
+      return next;
+    });
+  };
+
+  return { ids, addElement, removeElement, moveElementUp, moveElementDown };
 }

@@ -7,8 +7,20 @@ import { animated, useSpring } from '@react-spring/web';
 import { easings } from '@react-spring/web';
 import { useState } from 'react';
 import addVariablesToTailwindClass from '../helpers/addVariablesToTailwindClass';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
-function Row({ id, removeElement }: { id: number; removeElement: (id: number) => void }) {
+function Row({
+  id,
+  removeElement,
+  moveElementUp,
+  moveElementDown,
+}: {
+  id: number;
+  removeElement: (id: number) => void;
+  moveElementUp: (id: number) => void;
+  moveElementDown: (id: number) => void;
+}) {
   const {
     expression,
     result,
@@ -59,9 +71,25 @@ function Row({ id, removeElement }: { id: number; removeElement: (id: number) =>
           'grid grid-cols-1 gap-4 p-4',
           currentPlugin.configuration?.hideResult
             ? 'lg:grid-cols-[7%_91%]'
-            : 'lg:grid-cols-[7%_50%_40%]'
+            : 'lg:grid-cols-[2%_7%_47%_40%]'
         )}
       >
+        <div>
+          <button
+            className='btn btn-sm mb-1 mt-1 w-full max-w-[8em] rounded-md px-3 py-1 opacity-60 shadow-none'
+            onClick={() => moveElementUp(id)}
+            data-testid='move-up'
+          >
+            <FontAwesomeIcon icon={faArrowUp} />
+          </button>
+          <button
+            className='btn btn-sm mb-1 mt-1 w-full max-w-[8em] rounded-md px-3 py-1 opacity-60 shadow-none'
+            onClick={() => moveElementDown(id)}
+            data-testid='move-down'
+          >
+            <FontAwesomeIcon icon={faArrowDown} />
+          </button>
+        </div>
         <div className='flex items-center justify-center gap-2 lg:block'>
           <button
             className='btn btn-warning btn-sm mb-2 mt-2 w-full max-w-[8em] rounded-md px-3 py-1'

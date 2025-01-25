@@ -149,3 +149,49 @@ test('it adds a new row, changes to math mode and inserts "sin(45 deg) ^ 2" whic
 
   expect(result.innerHTML).toContain('0.4999999999999999');
 });
+
+test('it moves a row up', () => {
+  const linkElement = screen.getByText('Alt + Enter or click here to add row');
+
+  // Add 2 rows
+  fireEvent.click(linkElement);
+  fireEvent.click(linkElement);
+
+  // Get the expressions and move up buttons
+  let expressions = screen.getAllByTestId('expression');
+  const moveUps = screen.getAllByTestId('move-up');
+
+  // Add expressions to the rows and move the second row up
+  fireEvent.input(expressions[1], { target: { textContent: 'return 3+3' } });
+  fireEvent.click(moveUps[1]);
+
+  // Get the expressions again
+  expressions = screen.getAllByTestId('expression');
+
+  window.localStorage.clear();
+
+  expect(expressions[0].innerHTML).toContain('return 3+3');
+});
+
+test('it moves a row down', () => {
+  const linkElement = screen.getByText('Alt + Enter or click here to add row');
+
+  // Add 2 rows
+  fireEvent.click(linkElement);
+  fireEvent.click(linkElement);
+
+  // Get the expressions and move down buttons
+  let expressions = screen.getAllByTestId('expression');
+  const moveDowns = screen.getAllByTestId('move-down');
+
+  // Add expressions to the rows and move the first row down
+  fireEvent.input(expressions[0], { target: { textContent: 'return 3+3' } });
+  fireEvent.click(moveDowns[0]);
+
+  // Get the expressions again
+  expressions = screen.getAllByTestId('expression');
+
+  window.localStorage.clear();
+
+  expect(expressions[1].innerHTML).toContain('return 3+3');
+});

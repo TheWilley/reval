@@ -3,11 +3,17 @@ import Rows from './components/Rows';
 import useIds from './hooks/useIds';
 
 function App() {
-  const [ids, addElement, removeElement] = useIds();
+  const { ids, addElement, removeElement, moveElementUp, moveElementDown } = useIds();
   return (
     <>
       <Header />
-      <Rows ids={ids} addElement={addElement} removeElement={removeElement} />
+      <Rows
+        ids={ids}
+        addElement={addElement}
+        removeElement={removeElement}
+        moveElementUp={moveElementUp}
+        moveElementDown={moveElementDown}
+      />
     </>
   );
 }
