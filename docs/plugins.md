@@ -12,27 +12,22 @@ To facilitate easy extensibility, a plugin system has been implemented where an 
 
 ---
 
-## Understanding the Plugin Structure
+## Understanding the Plugin Structures
 
-A plugin is an object that adheres to the `Plugin` type, which includes:
+A plugin is an object that adheres to the `Plugin` type, which has the following structure:
 
 - **evaluate**: A function that processes an input expression based on provided options.
 - **name**: A descriptive name for the plugin.
 - **placeholderText** _(optional)_: Placeholder text.
-- **hideResult** _(optional)_: Hides the result, effectively only displaying the expression textbox
-- **options** _(optional)_: Configuration options that the plugin can accept.
-
-## Defining Plugin Options
-
-Options allow users to customize the behavior of the plugin. Each option is defined with the following properties:
-
-- **name**: A user-friendly name for the option.
-- **type**: The data type of the option (`'string' | 'boolean' | 'number' | 'select'`).
-- **value**: The default value of the option.
-- **placeholderText** _(optional)_: Placeholder text (only works for string and number inputs)
-- **options** _(optional)_: The options to show when using the "select" type.
-
-Options are structured using the `PluginOption` type, which is a record where each key corresponds to an option.
+- **configuration** _(optional)_: Configures certains aspects of the plugin.
+  - **configuration.disableExpressionTextWrapping** _(optional)_: Disabled text wrapping of the expression.
+  - **configuration.hideResult** _(optional)_: Hides the result, effectively only displaying the expression textbox.
+- **options** _(optional)_: object(s) which generates options the user can adjust.
+  - **options.[key].name**: A user-friendly name for the option.
+  - **options.[key].type**: The data type of the option (`'string' | 'boolean' | 'number' | 'select'`).
+  - **options.[key].value**: The default value of the option.
+  - **options.[key].placeholderText** _(optional)_: Placeholder text (only works for string and number inputs).
+  - **options.[key].options** _(optional)_: The options to show when using the "select" type.
 
 ## Implementing the Evaluate Function
 
